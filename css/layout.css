@@ -1,0 +1,294 @@
+/* ============================================================
+   OCN9 — layout.css
+   Camada 3 de 5. Estrutura da página: nav, canvas, seções,
+   grades reutilizáveis, rodapé e breakpoints.
+   Regra: layout posiciona, componente decora. Se a regra fala
+   de background, borda de card ou tipografia de conteúdo,
+   ela pertence a components.css.
+   ============================================================ */
+
+/* ---------- Barra de navegação ---------- */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-nav);
+  height: var(--layout-nav-h);
+  background: var(--surface-page);
+  border-bottom: var(--border-width) solid var(--border-default);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: var(--layout-max-w);
+  margin-inline: auto;
+}
+
+/* A marca empurra todo o resto para a direita. Não use
+   justify-content: space-between aqui — com três filhos ele
+   espalharia menu e ações em vez de agrupá-los. */
+.nav__brand {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: auto;
+  padding-left: var(--sp-4);
+  min-width: 0;
+}
+
+.nav__menu,
+.nav__tabs,
+.nav__lang,
+.nav__actions {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Fecha a régua de filetes no fim da barra. */
+.nav__actions {
+  border-right: var(--border-width) solid var(--border-default);
+}
+
+/* Só existe abaixo do breakpoint. O display do hambúrguer mora em
+   components.css: ele carrega a classe .nav__tab, cujo display:flex
+   é declarado lá — e components.css vem depois deste arquivo, então
+   venceria qualquer regra de esconder escrita aqui. */
+.nav__current {
+  display: none;
+}
+
+/* ---------- Canvas da página ---------- */
+.page {
+  max-width: var(--layout-max-w);
+  min-height: 100vh;
+  margin-inline: auto;
+  padding-top: var(--layout-nav-h);
+  border-inline: var(--border-width) solid var(--border-default);
+}
+
+/* ---------- Painéis de aba ---------- */
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+/* ---------- Seção ---------- */
+.section {
+  padding: var(--sp-8) var(--layout-px) var(--sp-10);
+}
+
+.section + .section {
+  border-top: var(--border-width) solid var(--border-default);
+}
+
+.section--flush {
+  padding-inline: 0;
+}
+
+/* ---------- Grades reutilizáveis ---------- */
+
+/* Colunas divididas por linha, como uma tabela editorial. */
+.grid-split {
+  display: grid;
+  border-bottom: var(--border-width) solid var(--border-default);
+}
+
+.grid-split--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-split--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-split--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.grid-split > * {
+  border-right: var(--border-width) solid var(--border-default);
+  min-width: 0;
+}
+
+.grid-split > *:last-child {
+  border-right: none;
+}
+
+/* Grade solta, sem linhas separadoras. */
+.grid-auto {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* Par de blocos com o segundo alinhado à direita (topo de aba). */
+.cluster-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(var(--sp-6), 5vw, var(--sp-16));
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack--2 { gap: var(--sp-2); }
+.stack--4 { gap: var(--sp-4); }
+.stack--6 { gap: var(--sp-6); }
+.stack--8 { gap: var(--sp-8); }
+
+/* ---------- Rodapé ---------- */
+.footer {
+  background: var(--surface-page);
+  border-top: var(--border-width) solid var(--border-default);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  max-width: var(--layout-max-w);
+  margin-inline: auto;
+  padding: var(--sp-5) var(--layout-px);
+}
+
+/* ============================================================
+   BREAKPOINT DA NAV — 900px
+
+   Número medido, não arbitrário: a barra horizontal completa
+   (marca + 4 abas + PT/EN + tema) ocupa 844px em português, o
+   idioma de rótulos mais longos. Abaixo disso ela não cabe e a
+   marca fica coberta. Os 56px de folga absorvem variação de
+   fonte. Se os rótulos das abas mudarem, meça de novo.
+   ============================================================ */
+
+@media (max-width: 900px) {
+  /* ---------- Nav vira hambúrguer ----------
+     Abaixo desta largura os quatro rótulos não cabem na barra sem
+     rolar na horizontal — o que esconde destino e cobre a marca.
+     A barra passa a ter só marca, tema e hambúrguer; o menu abre
+     como gaveta logo abaixo, com os itens empilhados.
+     (O display do próprio botão está em components.css.) */
+  .nav__current {
+    display: block;
+    min-width: 0;
+    padding-inline: var(--sp-3);
+    font-family: var(--font-mono);
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--accent-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav__actions {
+    min-width: 0;
+    border-right: none;
+  }
+
+  .nav__menu {
+    position: fixed;
+    top: var(--layout-nav-h);
+    left: 0;
+    right: 0;
+    /* Explícito de propósito: o véu abaixo usa z-index negativo e
+       a gaveta precisa ficar acima dele sem depender da ordem de
+       pintura padrão. */
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    max-height: calc(100vh - var(--layout-nav-h));
+    overflow-y: auto;
+    background: var(--surface-page);
+    border-bottom: var(--border-width) solid var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav.is-open .nav__menu {
+    display: flex;
+  }
+
+  /* Véu sobre o conteúdo, para o toque fora da gaveta ter alvo
+     visível. z-index negativo o mantém atrás da própria barra. */
+  .nav.is-open::before {
+    content: '';
+    position: fixed;
+    inset: var(--layout-nav-h) 0 0 0;
+    z-index: -1;
+    background: var(--scrim);
+  }
+
+  .nav__tabs,
+  .nav__lang {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .nav__lang {
+    flex-direction: row;
+    gap: var(--sp-2);
+    padding: var(--sp-3) var(--layout-px);
+  }
+}
+
+/* ============================================================
+   BREAKPOINTS
+   960px → tablet: colunas viram pilha, respiro menor.
+   600px → celular: uma coluna, respiro mínimo.
+   ============================================================ */
+
+@media (max-width: 960px) {
+  :root {
+    --layout-px: 24px;
+  }
+
+  .grid-split--3,
+  .grid-split--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-split > * {
+    border-bottom: var(--border-width) solid var(--border-default);
+  }
+
+  .grid-split > *:nth-child(2n) {
+    border-right: none;
+  }
+
+  .cluster-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-6);
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --layout-px: 16px;
+  }
+
+  .page {
+    border-inline: none;
+  }
+
+  .grid-split--2,
+  .grid-split--3,
+  .grid-split--4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid-split > * {
+    border-right: none;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-2);
+  }
+}

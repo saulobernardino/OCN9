@@ -1,0 +1,48 @@
+/* ============================================================
+   OCN9 — utilities.css
+   Camada 5 de 5, sempre a última a carregar.
+   Ajustes de uma propriedade só. Use para exceções pontuais;
+   se você precisar de três utilitários no mesmo elemento em
+   dois lugares diferentes, isso é um componente — promova.
+   ============================================================ */
+
+/* ---------- Espaço ---------- */
+.mt-0 { margin-top: 0 !important; }
+.mt-2 { margin-top: var(--sp-2) !important; }
+.mt-4 { margin-top: var(--sp-4) !important; }
+.mt-6 { margin-top: var(--sp-6) !important; }
+.mt-8 { margin-top: var(--sp-8) !important; }
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-2 { margin-bottom: var(--sp-2) !important; }
+.mb-4 { margin-bottom: var(--sp-4) !important; }
+.mb-6 { margin-bottom: var(--sp-6) !important; }
+.mb-8 { margin-bottom: var(--sp-8) !important; }
+
+/* ---------- Texto ---------- */
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.text-accent { color: var(--accent-text) !important; }
+.text-highlight { color: var(--highlight-text) !important; }
+
+.text-mono { font-family: var(--font-mono) !important; }
+.text-display { font-family: var(--font-display) !important; }
+
+.text-2xs { font-size: var(--fs-2xs) !important; }
+.text-xs { font-size: var(--fs-xs) !important; }
+.text-sm { font-size: var(--fs-sm) !important; }
+
+.text-upper { text-transform: uppercase !important; letter-spacing: var(--ls-wide) !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+/* ---------- Exibição ---------- */
+.is-hidden { display: none !important; }
+.flex-1 { flex: 1 1 auto !important; min-width: 0; }
+.no-border { border: none !important; }
+
+/* Trava o scroll do body enquanto um overlay está aberto. */
+.has-overlay {
+  overflow: hidden;
+}

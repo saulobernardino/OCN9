@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oil Can No. 9 — Projeto</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-0:#081A22;--bg-1:#0F2430;--bg-2:#16303D;--bg-h:#1D3D4D;
+  --blue:#1F6F8B;--blue-h:#2786A8;--blue-l:#53A9C5;--blue-s:#2A4652;
+  --red:#8E2C2C;--red-h:#A63A3A;--red-l:#C35B5B;--red-s:#3B2024;
+  --t1:#F2E8E0;--t2:#B7C2C8;--t3:#73838D;--border:#28404A;
+  --border-subtle:rgba(255,255,255,.055);
+  --fd:'Cabinet Grotesk',system-ui,sans-serif;
+  --fm:'Geist Mono','Courier New',monospace;
+  --nav:48px;--mw:1200px;--px:40px
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fm);background:var(--bg-0);color:var(--t1);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav);background:var(--bg-0);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--mw);margin:0 auto;padding:0;height:100%;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
+.nav-logo{display:flex;align-items:center;height:100%;padding-left:2px}
+.nav-wordmark{font-family:var(--fd);font-size:17px;font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1;white-space:nowrap}
+.nav-no9{color:var(--blue-l)}
+.nav-tabs{display:flex;list-style:none;height:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tabs button{font-family:var(--fm);font-size:10px;color:var(--t3);background:none;border:none;cursor:pointer;letter-spacing:.07em;padding:0 18px;height:100%;display:flex;align-items:center;border-left:1px solid var(--border);transition:color .15s,background .15s;text-transform:uppercase;white-space:nowrap}
+.nav-tabs button:hover{color:var(--t1);background:var(--bg-1)}
+.nav-tabs button.active{color:var(--blue-l)}
+.nav-tabs li:last-child button{border-right:1px solid var(--border)}
+
+/* PAGE */
+.page{max-width:var(--mw);margin:0 auto;padding-top:var(--nav);border-left:1px solid var(--border);border-right:1px solid var(--border);min-height:100vh}
+
+/* TAB CONTENT */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* GRID */
+.grid-row{display:grid;border-bottom:1px solid var(--border)}
+
+/* SECTION LABEL */
+.sl{font-family:var(--fm);font-size:9px;color:var(--blue-l);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sl::after{content:'';flex:1;height:1px;background:var(--border-subtle)}
+
+/* HERO */
+#hero{grid-template-columns:1fr 260px;align-items:stretch}
+.hero-l{padding:48px var(--px) 44px;border-right:1px solid var(--border)}
+.eyebrow{font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:inline-block;width:20px;height:1px;background:var(--red)}
+.hero-logo{margin-bottom:28px}
+.hero-logo svg{height:clamp(52px,7vw,90px);width:auto;display:block}
+.hero-r{padding:48px 32px 44px;display:flex;flex-direction:column;justify-content:flex-end}
+.stat-label{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.stat-line{font-family:var(--fm);font-size:13px;color:var(--t2);font-weight:300;display:flex;align-items:baseline;gap:5px;margin-top:5px}
+.stat-line strong{font-family:var(--fd);font-size:22px;font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1}
+.stat-line small{font-size:11px;color:var(--t3)}
+
+/* EP CHIPS */
+.ep-chips{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.ep-chip{font-family:var(--fm);font-size:10px;letter-spacing:.07em;text-transform:uppercase;padding:7px 16px;border-radius:2px;border:1px solid var(--border);background:var(--bg-2);color:var(--t3);cursor:default;transition:all .15s}
+.ep-chip.active{color:var(--red-l);background:var(--red-s);border-color:var(--red)}
+.ep-chip.inactive{opacity:.45}
+
+/* TRACK CARDS */
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.track-card{padding:28px 28px 32px;background:var(--bg-1);border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:16px;transition:background .2s}
+.track-card:nth-child(2n){border-right:none}
+.track-card:nth-last-child(-n+2){border-bottom:none}
+.track-card:hover{background:var(--bg-2)}
+.track-card.coming-soon{opacity:.5}
+.track-card.coming-soon:hover{background:var(--bg-1)}
+.track-header{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.track-title{font-family:var(--fd);font-size:24px;font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1;font-style:italic}
+.track-bpm{font-family:var(--fm);font-size:10px;color:var(--blue-l);letter-spacing:.08em;text-transform:uppercase;flex-shrink:0}
+.track-status{font-family:var(--fm);font-size:11px;color:var(--t3);letter-spacing:.06em;font-style:italic}
+
+/* AUDIO PLAYER */
+.track-player{width:100%}
+.track-player audio{width:100%;height:36px;border-radius:2px;outline:none}
+
+/* DOWNLOAD BTN */
+.track-dl{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;background:var(--bg-0);border:1px solid var(--border);padding:8px 14px;border-radius:2px;transition:all .15s;cursor:pointer;width:fit-content}
+.track-dl:hover{border-color:var(--blue);color:var(--blue-l);background:var(--blue-s)}
+.track-dl svg{width:14px;height:14px;flex-shrink:0}
+
+/* LYRICS */
+.lyrics-toggle{font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--border);padding:7px 14px;border-radius:2px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:8px}
+.lyrics-toggle:hover{color:var(--t2);border-color:var(--blue-s)}
+.lyrics-toggle .arrow{font-size:10px;order:2;line-height:1}
+.lyrics-body{display:none}
+.preprod-note{font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.07em;text-transform:uppercase;margin:0 0 28px}
+.modal-body .lyrics-text{padding-top:0;font-size:13px}
+.lyrics-text{font-family:var(--fm);font-size:12px;color:var(--t2);line-height:1.85;font-weight:300;padding-top:12px;white-space:pre-line}
+
+/* CARD SECTION */
+.card-section{padding:36px var(--px) 40px}
+.card-section+.card-section{border-top:1px solid var(--border)}
+.mission-body{font-family:var(--fm);font-size:13px;color:var(--t2);line-height:1.75;font-weight:300}
+.mission-body strong{color:var(--t1);font-weight:500}
+.mission-body p+p{margin-top:12px}
+.divider{height:1px;background:var(--border);margin:24px 0}
+.obj-text{font-family:var(--fm);font-size:13px;color:var(--t2);line-height:1.6;font-weight:300;margin-top:8px}
+.help-btn{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;min-width:15px;border-radius:50%;background:var(--red);color:#fff;font-family:var(--fm);font-size:9px;font-weight:500;border:none;cursor:pointer;padding:0;margin-left:7px;vertical-align:middle;line-height:1}
+.help-btn:hover{background:var(--red-h)}
+.help-btn:focus-visible{outline:2px solid var(--blue-l);outline-offset:2px}
+.modal-ov{position:fixed;inset:0;z-index:200;background:rgba(4,12,16,.84);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:24px}
+.modal-ov.open{display:flex}
+.modal{background:var(--bg-1);border:1px solid var(--border);border-radius:3px;width:min(720px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border);flex:0 0 auto}
+.modal-title{font-family:var(--fd);font-size:16px;font-weight:800;color:var(--t1);letter-spacing:-.015em}
+.modal-x{background:none;border:1px solid var(--border);border-radius:2px;color:var(--t3);cursor:pointer;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;font-family:var(--fm)}
+.modal-x:hover{color:var(--t1);background:var(--bg-2)}
+.modal-body{padding:20px;overflow-y:auto}
+.modal-img{width:100%;border:1px solid var(--border);border-radius:2px;display:block;margin:2px 0 0;background:var(--bg-2)}
+.modal-h{font-family:var(--fm);font-size:9px;color:var(--blue-l);letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+.modal-h+.modal-p{margin-top:0}
+.modal-p{font-family:var(--fm);font-size:12.5px;color:var(--t2);font-weight:300;line-height:1.7;margin:0 0 18px}
+.modal-p:last-child{margin-bottom:0}
+.modal-p strong{color:var(--t1);font-weight:500}
+@media(max-width:600px){.modal-ov{padding:12px}.modal-body{padding:16px}}
+.hero-line{font-family:var(--fm);font-size:12px;color:var(--t2);font-weight:300;letter-spacing:.03em;margin:26px 0 0;padding-top:20px;border-top:1px solid var(--border)}
+.hero-line strong{font-family:var(--fd);font-size:17px;font-weight:800;color:var(--t1);letter-spacing:-.02em}
+.nav-tabs .lang-btn{font-size:11px;letter-spacing:.04em;text-transform:none;padding:0 12px}
+.nav-tabs .lang-btn[aria-pressed="true"]{color:var(--t1);background:var(--blue)}
+.concept-head{display:flex;align-items:center;justify-content:space-between;gap:clamp(24px,5vw,64px)}
+.concept-logo{flex:0 0 auto}
+.concept-logo svg{height:clamp(46px,6.5vw,84px);width:auto;display:block;color:var(--t1)}
+.tagline{font-family:var(--fd);font-size:clamp(16px,2.3vw,25px);font-weight:800;letter-spacing:-.025em;line-height:1.3;color:var(--t1);margin:0;text-align:right;flex:1 1 auto;min-width:0;text-wrap:balance}
+.tagline .tl-a{color:var(--blue-l)}
+.tagline .tl-b{color:var(--red-l)}
+@media(max-width:760px){.concept-head{flex-direction:column;align-items:flex-start;gap:22px}.tagline{text-align:left}}
+.flow{border:1px solid var(--border);border-radius:2px;overflow:hidden;margin-top:2px}
+.flow-step{display:grid;grid-template-columns:60px 1fr;background:var(--bg-1)}
+.flow-step+.flow-step{border-top:1px solid var(--border)}
+.flow-n{font-family:var(--fm);font-size:10px;color:var(--blue-l);letter-spacing:.1em;padding:19px 0 19px 20px;border-right:1px solid var(--border)}
+.flow-body{padding:17px 20px 19px;min-width:0}
+.flow-title{font-family:var(--fd);font-size:15px;font-weight:800;color:var(--t1);letter-spacing:-.015em;margin-bottom:5px}
+.flow-desc{font-family:var(--fm);font-size:12px;color:var(--t2);font-weight:300;line-height:1.6}
+.flow-list{list-style:none;padding:0;margin:11px 0 0;display:flex;flex-direction:column;gap:7px}
+.flow-list li{font-family:var(--fm);font-size:12px;color:var(--t2);font-weight:300;line-height:1.5;padding-left:16px;position:relative}
+.flow-list li::before{content:'';position:absolute;left:0;top:.62em;width:7px;height:1px;background:var(--red)}
+.flow-list li strong{color:var(--t1);font-weight:500}
+.flow-step.result{background:var(--red-s)}
+.flow-step.result .flow-n{color:var(--red-l);border-right-color:var(--red)}
+.flow-step.result .flow-desc{color:var(--t2)}
+.flow-step.result .flow-desc strong{color:var(--t1);font-weight:500}
+.parallel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:2px;margin-top:12px}
+.parallel>div{background:var(--bg-2);padding:12px 14px}
+.p-who{font-family:var(--fm);font-size:9px;color:var(--blue-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.p-what{font-family:var(--fm);font-size:11.5px;color:var(--t2);font-weight:300;line-height:1.45}
+@media(max-width:760px){.parallel{grid-template-columns:minmax(0,1fr)}.flow-step{grid-template-columns:44px 1fr}.flow-n{padding-left:13px}}
+
+/* META FREE */
+.meta-free{display:flex;flex-direction:column;gap:0;margin-bottom:24px}
+.meta-free-row{display:flex;align-items:baseline;gap:14px;padding:8px 0;border-bottom:1px solid var(--border-subtle)}
+.meta-free-row:last-child{border-bottom:none}
+.mf-key{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;min-width:88px;flex-shrink:0}
+.mf-val{font-family:var(--fm);font-size:12px;color:var(--t2);letter-spacing:.03em}
+.mf-accent{color:var(--red-l)}
+
+/* TIMELINE */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);margin-top:28px}
+.ep{padding:28px 24px 32px;background:var(--bg-1);border-right:1px solid var(--border);position:relative;transition:background .2s}
+.ep:last-child{border-right:none}
+.ep:hover{background:var(--bg-h)}
+.ep.active{background:var(--bg-2)}
+.ep.active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red)}
+.ep-num{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.ep-cover{width:100%;aspect-ratio:1;background:var(--bg-0);border:1px solid var(--border);border-radius:2px;margin-bottom:14px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ep-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.ep-cover-ph{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.06em;opacity:.5;text-align:center;padding:8px}
+.ep-name{font-family:var(--fd);font-size:22px;font-weight:800;color:var(--t3);letter-spacing:-.02em;line-height:1;font-style:italic;margin-bottom:8px}
+.ep-year{font-family:var(--fm);font-size:10px;color:var(--blue-l);letter-spacing:.07em;margin-bottom:20px}
+.ep-tracks{display:flex;flex-direction:column;gap:6px;list-style:none}
+.ep-tracks li{font-family:var(--fm);font-size:11px;color:var(--t2);padding-left:16px;position:relative}
+.ep-tracks li::before{content:'—';position:absolute;left:0;color:var(--t3)}
+.ep-note{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.06em;margin-top:14px;opacity:.7}
+
+/* IDENTIDADE */
+.id-grid{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border)}
+.card-id{padding:28px 32px 32px;border-right:1px solid var(--border)}
+.card-id:last-child{border-right:none}
+.logo-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px}
+.logo-version{display:flex;align-items:center;justify-content:center}
+.logo-version svg{width:100%;height:auto;max-height:35px}
+.logo-col-hdr{font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-bottom:4px}
+.logo-cols-hdr-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:4px}
+.typo-block{margin-top:16px}
+.typo-sp{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1}
+.typo-meta{font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.06em;margin-top:5px}
+.typo-sp2{font-family:var(--fm);font-size:14px;font-weight:400;color:var(--t2);margin-top:18px;letter-spacing:.01em}
+.color-grid{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.color-group{display:flex;flex-direction:column;gap:4px}
+.swatches{display:flex;gap:4px}
+.swatch{height:22px;flex:1;border-radius:2px;border:1px solid rgba(255,255,255,.04)}
+.cg-label{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.07em;text-transform:uppercase}
+
+/* MOODBOARD */
+.card-mood{padding:36px var(--px) 48px}
+.mood-desc{font-family:var(--fm);font-size:13px;color:var(--t2);line-height:1.75;font-weight:300;margin:10px 0 4px;max-width:78ch}
+.mood-desc strong{color:var(--t1);font-weight:500}
+.mood-grid{columns:5;column-gap:8px;margin-top:24px}
+.mood-item{break-inside:avoid;margin-bottom:8px;position:relative;overflow:hidden;border-radius:2px;border:1px solid var(--border);background:var(--bg-2);cursor:pointer;transition:border-color .2s}
+.mood-item:hover{border-color:var(--blue-h)}
+.mood-item img{display:block;width:100%;height:auto;transition:transform .5s,filter .4s;filter:saturate(70%)}
+.mood-item:hover img{transform:scale(1.05);filter:saturate(100%)}
+.mood-ph{display:flex;align-items:flex-end;padding:10px;background:var(--bg-2)}
+.mood-ph span{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.05em}
+.mood-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,26,34,.7) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:10px}
+.mood-item:hover .mood-ov{opacity:1}
+.mood-ov span{font-family:var(--fm);font-size:9px;color:rgba(242,232,224,.6);letter-spacing:.05em}
+
+/* SPOTIFY */
+.card-spotify{padding:36px var(--px) 48px;display:flex;flex-direction:column}
+.spotify-frame{flex:1;margin-top:18px}
+.spotify-frame iframe{display:block;width:100%;border-radius:4px}
+.sonora-sub{font-family:var(--fm);font-size:13px;color:var(--t2);letter-spacing:.04em;margin-top:-4px;margin-bottom:24px;font-weight:300}
+
+/* FOOTER */
+footer{width:100%;background:var(--bg-0);border-top:1px solid var(--border)}
+.footer-inner{max-width:var(--mw);margin:0 auto;padding:18px 0;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
+footer span{font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.06em}
+.footer-wordmark{font-family:var(--fd);font-size:15px;font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1;opacity:.45}
+.footer-no9{color:var(--blue-l)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  :root{--px:24px}
+  #hero{grid-template-columns:1fr}
+  .hero-r{border-top:1px solid var(--border);flex-direction:row;gap:32px}
+  .id-grid{grid-template-columns:1fr}
+  .card-id{border-right:none;border-bottom:1px solid var(--border)}
+  .timeline{grid-template-columns:1fr 1fr}
+  .mood-grid{columns:3}
+  .track-grid{grid-template-columns:1fr}
+  .track-card{border-right:none!important}
+  .track-card:nth-last-child(-n+2){border-bottom:1px solid var(--border)}
+  .track-card:last-child{border-bottom:none}
+}
+@media(max-width:600px){
+  :root{--px:16px}
+  .timeline{grid-template-columns:1fr}
+  .mood-grid{columns:2}
+  .track-header{flex-direction:column;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG DEFS -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<g id="lp">
+<path d="M264.778 178.786C269.053 178.786 271.997 181.452 271.997 188.538C271.997 195.553 269.053 198.289 264.778 198.289C260.573 198.289 257.629 195.554 257.629 188.538C257.629 181.452 260.573 178.786 264.778 178.786Z" fill="currentColor"/>
+<path d="M342.582 167.561C347.418 167.561 349.941 170.298 349.941 175.349C349.941 179.698 347.278 182.434 342.512 182.434C337.396 182.434 335.083 179.277 335.083 174.998C335.083 170.718 337.746 167.561 342.582 167.561Z" fill="currentColor"/>
+<path d="M388.689 102.56C391.703 102.56 394.078 103.289 395.813 104.747C397.639 106.206 398.553 108.211 398.553 110.763C398.553 113.133 397.639 115.093 395.813 116.642C394.078 118.192 391.703 118.966 388.689 118.966C385.676 118.966 383.301 118.192 381.566 116.642C379.831 115.093 378.963 113.133 378.963 110.763C378.963 108.211 379.831 106.206 381.566 104.747C383.301 103.289 385.676 102.56 388.689 102.56Z" fill="currentColor"/>
+<path d="M116.363 56.349C121.66 56.349 126.363 57.5339 130.473 59.9037C134.674 62.1822 137.962 65.4637 140.336 69.7474C142.711 74.0312 143.898 79.0444 143.898 84.7865C143.898 90.6198 142.711 95.6787 140.336 99.9626C137.962 104.246 134.674 107.573 130.473 109.943C126.363 112.312 121.66 113.497 116.363 113.497C110.974 113.497 106.179 112.313 101.978 109.943C97.8683 107.573 94.6257 104.246 92.2512 99.9626C89.8766 95.6788 88.6898 90.6656 88.6898 84.9235C88.6898 79.0902 89.8766 74.0771 92.2512 69.8844C94.6257 65.6006 97.8683 62.2734 101.978 59.9037C106.179 57.534 110.974 56.349 116.363 56.349Z" fill="currentColor"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M486.063 0C504.922 0 514.352-0.000284652 521.964 3.45682C528.672 6.50369 534.371 11.4064 538.388 17.5869C542.947 24.5995 544.365 33.9309 547.199 52.5936L558.062 124.11C559.86 135.944 560.759 141.861 559.197 148.911C558.036 154.152 554.263 161.693 550.766 165.763C546.062 171.238 541.924 173.455 533.648 177.887C481.126 206.021 382.176 241.356 280.932 241.785L280.927 241.79C280.618 241.79 280.309 241.788 280 241.787C279.691 241.788 279.382 241.79 279.073 241.79L279.071 241.787L279.068 241.785C177.824 241.356 78.874 206.021 26.3521 177.887C18.0765 173.454 13.9384 171.238 9.23378 165.763C5.7367 161.693 1.96404 154.152 0.803091 148.911C-0.758708 141.861 0.139614 135.944 1.93722 124.11L12.8007 52.5936C15.6356 33.931 17.0532 24.5995 21.6119 17.5869C25.6296 11.4064 31.3282 6.50367 38.0365 3.45682C45.6481-0.000274198 55.0778 0 73.937 0H486.063ZM264.638 170.648C254.195 170.648 247.467 178.085 247.467 188.538C247.467 199.061 254.195 206.428 264.638 206.428C275.361 206.428 282.159 199.061 282.159 188.538C282.159 178.085 275.361 170.648 264.638 170.648ZM342.232 158.02C331.579 158.02 324.219 164.545 324.219 174.437C324.219 182.855 328.565 189.099 337.886 189.099C344.545 189.099 348.89 185.521 350.152 179.698V183.486C350.152 193.378 346.367 196.395 340.971 196.396C336.695 196.396 333.401 194.431 330.667 190.713L325.411 200.044C328.565 203.762 334.032 206.428 340.69 206.428C354.427 206.428 361.226 197.658 361.226 183.066V181.733C361.226 165.878 354.918 158.02 342.232 158.02ZM199.195 158.722V205.726H209.217V185.662L208.446 174.016L212.651 180.961L229.753 205.726H239.285V158.722H229.262V179.558L229.893 190.642L225.618 183.276L208.937 158.722H199.195ZM288.956 194.852V205.726H299.609V194.852H288.956ZM390.333 62.9121C385.493 62.9121 380.743 63.5043 376.086 64.6891C371.519 65.874 367.227 67.4694 363.208 69.4746L369.099 83.6927C372.478 82.0522 375.766 80.9584 378.963 80.4115C382.159 79.7735 384.99 79.4548 387.456 79.4548C391.292 79.4548 394.078 80.3663 395.813 82.1891C397.548 84.012 398.416 86.1538 398.416 88.6146V92.4238C394.36 89.6112 389.109 88.2048 382.662 88.2048C378.095 88.2048 373.94 89.1163 370.195 90.9391C366.542 92.762 363.62 95.3595 361.428 98.7318C359.236 102.013 358.14 106.024 358.14 110.763C358.14 115.229 359.144 119.149 361.154 122.521C363.163 125.893 365.994 128.537 369.647 130.451C373.392 132.273 377.684 133.185 382.525 133.185C389.192 133.185 394.58 131.635 398.69 128.537C399.403 127.998 400.076 127.423 400.71 126.814L402.115 131.408H418.417V89.4349C418.417 84.1486 417.367 79.4999 415.266 75.4896C413.257 71.4794 410.152 68.3808 405.951 66.1933C401.75 64.0058 396.544 62.9121 390.333 62.9121ZM116.363 36.6621C109.239 36.6621 102.754 37.847 96.9094 40.2167C91.0643 42.5865 85.9952 45.959 81.7027 50.3339C77.4104 54.6177 74.0769 59.7216 71.7024 65.6458C69.4191 71.4792 68.2774 77.9053 68.2774 84.9235C68.2774 91.9417 69.4191 98.4131 71.7024 104.338C74.0769 110.171 77.4103 115.275 81.7027 119.65C85.9952 123.934 91.0643 127.26 96.9094 129.63C102.754 131.909 109.239 133.049 116.363 133.049C123.304 133.049 129.697 131.909 135.542 129.63C141.478 127.261 146.592 123.934 150.885 119.65C155.177 115.275 158.466 110.171 160.749 104.338C163.123 98.4131 164.31 91.9417 164.31 84.9235C164.31 77.9053 163.123 71.4792 160.749 65.6458C158.466 59.7215 155.177 54.6177 150.885 50.3339C146.592 45.959 141.478 42.5865 135.542 40.2167C129.697 37.847 123.304 36.6621 116.363 36.6621ZM313.688 36.7985C306.747 36.7985 300.354 37.9834 294.509 40.3532C288.755 42.6318 283.777 45.959 279.576 50.3339C275.375 54.6177 272.087 59.7216 269.713 65.6458C267.43 71.4792 266.288 77.9053 266.288 84.9235C266.288 94.3114 268.206 102.651 272.042 109.943C275.969 117.143 281.449 122.794 288.481 126.896C295.605 130.997 304.007 133.049 313.688 133.049C324.647 133.049 333.643 130.679 340.676 125.939C347.708 121.2 353.097 114.455 356.842 105.705L338.621 98.7318C335.607 103.927 332.045 107.71 327.936 110.08C323.917 112.45 319.168 113.634 313.688 113.634C308.482 113.634 303.824 112.45 299.715 110.08C295.696 107.71 292.5 104.383 290.125 100.099C287.842 95.724 286.7 90.6656 286.7 84.9235C286.7 79.0902 287.842 74.0313 290.125 69.7474C292.5 65.4638 295.696 62.137 299.715 59.7672C303.824 57.3063 308.482 56.0762 313.688 56.0761C319.168 56.0761 323.917 57.3063 327.936 59.7672C332.045 62.137 335.607 65.9194 338.621 71.1146L356.842 64.1422C353.097 55.3923 347.708 48.6474 340.676 43.9079C333.643 39.1684 324.647 36.7985 313.688 36.7985ZM203.504 38.3027V112.13C203.504 116.961 204.371 120.835 206.106 123.752C207.842 126.577 210.125 128.674 212.956 130.041C215.788 131.408 218.893 132.091 222.272 132.091C223.459 132.091 224.784 132 226.245 131.818C227.797 131.727 229.031 131.59 229.944 131.408V112.951C228.026 112.951 226.427 112.495 225.149 111.583C223.961 110.581 223.368 108.393 223.368 105.021V38.3027H203.504ZM171.734 64.5521V131.408H191.735V64.5521H171.734ZM470.176 62.9121C466.249 62.9121 462.504 63.5501 458.942 64.8261C455.38 66.1022 452.092 67.8334 449.078 70.0208C448.062 70.7581 447.083 71.5221 446.14 72.3111L443.735 64.5527H428.94V131.408H448.941V89.1756C449.874 88.2932 450.878 87.468 451.955 86.7005C453.873 85.3334 455.837 84.2855 457.846 83.5563C459.946 82.736 461.956 82.3255 463.874 82.3255C466.157 82.3256 467.984 82.9637 469.354 84.2396C470.723 85.4245 471.408 87.9314 471.408 91.7594V131.408H491.41V90.6657C491.41 87.111 491.135 83.6927 490.587 80.4115C490.131 77.0392 489.126 74.0312 487.574 71.388C486.112 68.745 483.966 66.6943 481.135 65.236C478.304 63.6865 474.651 62.9121 470.176 62.9121ZM181.734 31.6032C178.173 31.6032 175.296 32.697 173.104 34.8844C171.003 37.0719 169.953 39.9433 169.953 43.498C169.953 46.9614 171.003 49.7871 173.104 51.9746C175.296 54.0708 178.173 55.1188 181.734 55.1188C185.296 55.1188 188.128 54.0708 190.228 51.9746C192.42 49.7871 193.516 46.9614 193.516 43.498C193.516 39.9433 192.42 37.0719 190.228 34.8844C188.128 32.697 185.296 31.6032 181.734 31.6032Z" fill="currentColor"/>
+</g>
+</defs>
+</svg>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><span class="nav-wordmark">Oil Can <span class="nav-no9">No.&thinsp;9</span></span></div>
+    <ul class="nav-tabs">
+      <li><button class="active" data-tab="preprod" data-i18n="navPre">Pré-produção</button></li>
+      <li><button data-tab="missao" data-i18n="navCon">Conceito e Plano</button></li>
+      <li><button data-tab="visual" data-i18n="navVis">Estética visual</button></li>
+      <li><button data-tab="sonora" data-i18n="navSon">Estética sonora</button></li>
+      <li><button class="lang-btn" data-lang="en" aria-label="English">🏴󠁧󠁢󠁥󠁮󠁧󠁿&nbsp;EN</button></li>
+      <li><button class="lang-btn" data-lang="pt" aria-label="Português">🇧🇷&nbsp;PT</button></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- TAB 1 · PRÉ-PRODUÇÃO -->
+<div class="tab-panel active" id="tab-preprod">
+  <div class="card-section">
+    <div class="concept-head">
+      <div class="concept-logo"><svg viewBox="0 0 560 242" xmlns="http://www.w3.org/2000/svg"><use href="#lp"/></svg></div>
+      <p class="tagline"><span class="tl-a">Indie</span> nerve, <span class="tl-a">Britpop</span> swagger, <span class="tl-a">Stoner</span> rust.<br>Born in <span class="tl-b">Brazil</span>, 2026.</p>
+    </div>
+    <p class="hero-line" data-i18n="heroLine"><strong>3</strong> EPs com <strong>4</strong> faixas (lançamentos em 2027) &nbsp;•&nbsp; Faixas autorais: <strong>12</strong></p>
+  </div>
+  <div class="card-section">
+    <div class="sl" data-i18n="slPre">Pré-produção</div>
+    <p class="preprod-note" data-i18n="preprodNote">12 faixas · divisão em EPs definida após a sessão</p>
+    <div class="track-grid">
+
+      <!-- HIGH -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-title">High</div>
+          <div class="track-bpm">156 BPM</div>
+        </div>
+        <div class="track-player"><audio controls preload="metadata" src="oil-can/High-Pre-v2.mp3"></audio></div>
+        <a class="track-dl" href="oil-can/High-Tracks.zip" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-i18n="dlStems">Faixas separadas (.zip)</span>
+        </a>
+        <div>
+          <button class="lyrics-toggle" onclick="openLyrics(this)"><span data-i18n="lyr">Letra</span> <span class="arrow">&#8599;</span></button>
+          <div class="lyrics-body">
+            <div class="lyrics-text">You say enough to stay here
+You gotta come and find me today
+Let the night become your own
+Angels and demons are gone, please, be done
+
+You say enough for me to stay here
+You can see through the magic haze
+Letting go and drifting away
+Going to stop giving in to someone
+
+High... and let me lie down, going crazy
+Higher... than anyone's ever lain
+
+Deeper than you've ever dared
+Denser than you've ever known
+Further than you've ever gone
+Higher than you've ever flown
+Do you understand? Go deep into these clouds</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE -->
+      <div class="track-card">
+        <div class="track-header">
+          <div class="track-title">Slide</div>
+          <div class="track-bpm">132 BPM</div>
+        </div>
+        <div class="track-player"><audio controls preload="metadata" src="oil-can/Slide-Pre-v2.mp3"></audio></div>
+        <a class="track-dl" href="oil-can/Slide-Tracks.zip" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-i18n="dlStems">Faixas separadas (.zip)</span>
+        </a>
+        <div>
+          <button class="lyrics-toggle" onclick="openLyrics(this)"><span data-i18n="lyr">Letra</span> <span class="arrow">&#8599;</span></button>
+          <div class="lyrics-body">
+            <div class="lyrics-text">Life is ice, too thin to walk
+Every step is a beat, it can crack
+Why not&#8230; choose to slide?
+I see something in your smile
+
+Why?
+
+Life is ice, too cold to cross
+Every choice is a beat, we can freeze
+Why don&#8217;t&#8230; you choose to slide?
+I see in your smile something like a goodbye
+
+Come, come over... slide
+Come, come over... slide again
+Come, come over... slide and leave me behind, someday
+
+
+Life is ice, too thin to walk
+Every step is a beat, it can crack
+Why not&#8230; choose to slide?
+I see something in your smile
+
+Why? Why? Why&#8230; [Bridge]
+
+Life is ice, too cold to cross
+Every choice is a beat, we can freeze
+Why don&#8217;t&#8230; you choose to slide?
+I see in your smile something like a goodbye
+
+Come, come over... slide
+Come, come over... slide again
+
+Come, come over... slide
+Come, come over... slide again
+Come, come over... slide and leave me behind, someday</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRACK 3 -->
+      <!-- TRACK 03 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 03</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 04 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 04</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 05 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 05</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 06 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 06</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 07 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 07</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 08 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 08</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 09 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 09</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 10 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 10</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 11 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 11</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+      <!-- TRACK 12 -->
+      <div class="track-card coming-soon">
+        <div class="track-header">
+          <div class="track-title">Track 12</div>
+          <div class="track-bpm">— BPM</div>
+        </div>
+        <div class="track-status" data-i18n="soon">Em breve</div>
+        <div><button class="lyrics-toggle" disabled style="opacity:.35;cursor:default"><span data-i18n="noLyr">Sem letra</span> <span class="arrow">&#8599;</span></button></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2 · MISSÃO E ESTRATÉGIA -->
+<div class="tab-panel" id="tab-missao">
+  <div class="card-section">
+    <div class="concept-head">
+      <div class="concept-logo"><svg viewBox="0 0 560 242" xmlns="http://www.w3.org/2000/svg"><use href="#lp"/></svg></div>
+      <p class="tagline"><span class="tl-a">Indie</span> nerve, <span class="tl-a">Britpop</span> swagger, <span class="tl-a">Stoner</span> rust.<br>Born in <span class="tl-b">Brazil</span>, 2026.</p>
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="meta-free">
+      <div class="meta-free-row">
+        <span class="mf-key"><span data-i18n="mkArq">Arquétipo</span><button class="help-btn" data-help="arquetipos" aria-label="Sobre arquétipos">?</button></span>
+        <span class="mf-val" data-i18n="mvArq">everyman — urbano</span>
+      </div>
+      <div class="meta-free-row">
+        <span class="mf-key" data-i18n="mkTom">Tom de voz</span>
+        <span class="mf-val mf-accent" data-i18n="mvTom">direta · irônica · confiante</span>
+      </div>
+      <div class="meta-free-row">
+        <span class="mf-key" data-i18n="mkEst">Estilo</span>
+        <span class="mf-val">britpop · indie · stoner</span>
+      </div>
+      <div class="meta-free-row">
+        <span class="mf-key" data-i18n="mkFor">Formação</span>
+        <span class="mf-val">power trio</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="sl" data-i18n="slPret">Pretensão</div>
+    <div class="mission-body">
+      <p data-i18n="pret1">Ser <strong>relevante social e culturalmente</strong> para um grupo de pessoas que se importam com música, uma cena local, uma base de fãs em outro lugar. Presença em shows e ouvintes mensais no streaming são o termômetro. Mas entrega e crescimento são consequência, não pré-condição.</p>
+      <p data-i18n="pret2">A vida adulta tem agenda própria. Por isso a energia da banda precisa ser gasta de forma <strong>estratégica</strong>: conteúdo que valha, eventos com retorno, público que consome música de verdade. Festivais, Bolacha Discos, espaços afins.</p>
+      <p data-i18n="pret3">Composição e produção precisam ser momentos bons, recompensados pela própria experiência, independente do resultado.</p>
+    </div>
+    <div class="divider"></div>
+    <div class="sl" data-i18n="slObj">Primeiro objetivo</div>
+    <p class="obj-text" data-i18n="objTxt">Criar repertório autoral e iniciar as primeiras apresentações.</p>
+  </div>
+
+  <div class="card-section">
+    <div class="sl" data-i18n="slPlano">O plano</div>
+    <div class="flow">
+
+      <div class="flow-step">
+        <div class="flow-n">01</div>
+        <div class="flow-body">
+          <div class="flow-title" data-i18n="flow1t">Uma sessão só</div>
+          <p class="flow-desc" data-i18n="flow1d">Gravar as <strong style="color:var(--t1);font-weight:500">12 faixas de uma vez</strong>, ao vivo — baixo, bateria e guitarra tocando juntos.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-n">02</div>
+        <div class="flow-body">
+          <div class="flow-title" data-i18n="flow2t">Depois, de 4 em 4 músicas</div>
+          <p class="flow-desc" data-i18n="flow2d">Cada bloco percorre o mesmo caminho, na ordem dos EPs:</p>
+          <ul class="flow-list" data-i18n="flow2l">
+            <li><strong>Captação final</strong> — vozes e efeitos por cima da base</li>
+            <li><strong>Mixagem e masterização</strong></li>
+            <li><strong>Audiovisual das 4</strong> — visualiser, lyric video, clipe ou capa</li>
+            <li><strong>Registro e distribuição</strong> — ISRC e envio à distribuidora</li>
+            <li><strong>Lançamento</strong> — com pitch no Spotify de 1 faixa de trabalho</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-n">03</div>
+        <div class="flow-body">
+          <div class="flow-title" data-i18n="flow3t">Tudo em paralelo</div>
+          <p class="flow-desc" data-i18n="flow3d">Ninguém espera ninguém. Enquanto um bloco é finalizado, o próximo já está em fila e a banda não para.</p>
+        </div>
+      </div>
+
+      <div class="flow-step result">
+        <div class="flow-n">=</div>
+        <div class="flow-body">
+          <div class="flow-title" data-i18n="flow4t">No fim</div>
+          <p class="flow-desc" data-i18n="flow4d"><strong>3 EPs de 4 faixas, fechados.</strong> Sem singles avulsos, tudo dentro de 2027.<br>Depois: <strong>playlist consolidada no streaming</strong> + <strong>fita K7</strong> com as 12.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card-section">
+    <div class="sl" data-i18n="slLanc">Lançamentos</div>
+    <p style="font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.06em;margin-top:-4px" data-i18n="lancNote">3 EPs · 4 faixas cada · 1 faixa de trabalho por EP · ao menos um audiovisual por música</p>
+    <div class="timeline">
+      <div class="ep">
+        <div class="ep-num">EP 01 / 03</div>
+        <div class="ep-cover"><img src="oil-can/covers/ep01.jpg" alt="EP #01" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ep-cover-ph" style="display:none" data-i18n="coverPend">capa pendente</span></div>
+        <div class="ep-name">EP #01</div>
+        <div class="ep-year">2027</div>
+        <ul class="ep-tracks" data-i18n="epTracks"><li>Faixa 01</li><li>Faixa 02</li><li>Faixa 03</li><li>Faixa 04</li></ul>
+        <p class="ep-note" data-i18n="epNote">visualiser · lyric video · clipe</p>
+      </div>
+      <div class="ep">
+        <div class="ep-num">EP 02 / 03</div>
+        <div class="ep-cover"><img src="oil-can/covers/ep02.jpg" alt="EP #02" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ep-cover-ph" style="display:none" data-i18n="coverPend">capa pendente</span></div>
+        <div class="ep-name">EP #02</div>
+        <div class="ep-year">2027</div>
+        <ul class="ep-tracks" data-i18n="epTracks"><li>Faixa 01</li><li>Faixa 02</li><li>Faixa 03</li><li>Faixa 04</li></ul>
+        <p class="ep-note" data-i18n="epNote">visualiser · lyric video · clipe</p>
+      </div>
+      <div class="ep">
+        <div class="ep-num">EP 03 / 03</div>
+        <div class="ep-cover"><img src="oil-can/covers/ep03.jpg" alt="EP #03" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ep-cover-ph" style="display:none" data-i18n="coverPend">capa pendente</span></div>
+        <div class="ep-name">EP #03</div>
+        <div class="ep-year">2027</div>
+        <ul class="ep-tracks" data-i18n="epTracks"><li>Faixa 01</li><li>Faixa 02</li><li>Faixa 03</li><li>Faixa 04</li></ul>
+        <p class="ep-note" data-i18n="epNote">visualiser · lyric video · clipe</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 · ESTÉTICA VISUAL -->
+<div class="tab-panel" id="tab-visual">
+  <div class="id-grid">
+    <div class="card-id">
+      <div class="sl" data-i18n="slLogo">Logotipo</div>
+      <div class="logo-cols-hdr-row">
+        <span class="logo-col-hdr">#071A22</span>
+        <span class="logo-col-hdr">#EEE5DC</span>
+      </div>
+      <div class="logo-cols" id="logoGrid"></div>
+    </div>
+    <div class="card-id">
+      <div class="sl" data-i18n="slTipo">Tipografia</div>
+      <div class="typo-block">
+        <div class="typo-sp">Cabinet Grotesk</div>
+        <div class="typo-meta"><span data-i18n="tipo1">Display · Logo · Títulos — fontshare.com</span></div>
+        <div class="typo-sp2"><span data-i18n="tipo2">Geist Mono — texto / labels</span></div>
+        <div class="typo-meta" style="margin-top:4px">Body · UI · Metadata — Google Fonts</div>
+      </div>
+    </div>
+    <div class="card-id">
+      <div class="sl" data-i18n="slPal">Paleta</div>
+      <div class="color-grid">
+        <div class="color-group">
+          <div class="swatches">
+            <div class="swatch" style="background:#081A22"></div>
+            <div class="swatch" style="background:#0F2430"></div>
+            <div class="swatch" style="background:#16303D"></div>
+            <div class="swatch" style="background:#1D3D4D"></div>
+          </div>
+          <span class="cg-label">Backgrounds</span>
+        </div>
+        <div class="color-group">
+          <div class="swatches">
+            <div class="swatch" style="background:#1F6F8B"></div>
+            <div class="swatch" style="background:#2786A8"></div>
+            <div class="swatch" style="background:#53A9C5"></div>
+            <div class="swatch" style="background:#2A4652"></div>
+          </div>
+          <span class="cg-label"><span data-i18n="pal1">Primary — Azul petróleo</span></span>
+        </div>
+        <div class="color-group">
+          <div class="swatches">
+            <div class="swatch" style="background:#8E2C2C"></div>
+            <div class="swatch" style="background:#A63A3A"></div>
+            <div class="swatch" style="background:#C35B5B"></div>
+            <div class="swatch" style="background:#3B2024"></div>
+          </div>
+          <span class="cg-label"><span data-i18n="pal2">Accent — Vermelho vinho</span></span>
+        </div>
+        <div class="color-group">
+          <div class="swatches">
+            <div class="swatch" style="background:#F2E8E0;border-color:rgba(0,0,0,.1)"></div>
+            <div class="swatch" style="background:#B7C2C8"></div>
+            <div class="swatch" style="background:#73838D"></div>
+            <div class="swatch" style="background:#28404A"></div>
+          </div>
+          <span class="cg-label"><span data-i18n="pal3">Texto / Borda</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-mood">
+    <div class="sl" data-i18n="slMood">Moodboard visual</div>
+    <p class="mood-desc" data-i18n="moodDesc">Referência visual — palco em luz azul e vermelha, grão analógico, objeto urbano, cinema, itens analógicos.</p>
+    <div class="mood-grid" id="moodGrid"></div>
+  </div>
+</div>
+
+<!-- TAB 4 · ESTÉTICA SONORA -->
+<div class="tab-panel" id="tab-sonora">
+  <div class="card-spotify">
+    <div class="sl" data-i18n="slSon">Estética sonora</div>
+    <p class="sonora-sub">britpop · indie · stoner</p>
+    <div class="sl" data-i18n="slRefs">Referências sonoras</div>
+    <div class="spotify-frame">
+      <iframe src="https://open.spotify.com/embed/playlist/0aQBbXw3nFvfH2BluTNEgN?utm_source=generator&theme=0"
+        width="100%" height="600" frameBorder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-wordmark">Oil Can <span class="footer-no9">No.&thinsp;9</span></div>
+    <span data-i18n="eyebrow">projeto · v0.2 · 2026–2027</span>
+  </div>
+</footer>
+
+<div class="modal-ov" id="helpOv" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="helpTitle"></span>
+      <button class="modal-x" id="helpX" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="modal-body" id="helpBody"></div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-tabs button[data-tab]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tabs button[data-tab]').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+function openLyrics(btn){
+  const card = btn.closest('.track-card');
+  const body = card.querySelector('.lyrics-body');
+  const title = card.querySelector('.track-title').textContent.trim();
+  const bpm = card.querySelector('.track-bpm');
+  if (!body) return;
+  openModal(title + (bpm ? '  ·  ' + bpm.textContent.trim() : ''), body.innerHTML, null);
+}
+const lv=[
+  {bg:'#071A22',fill:'#EEE5DC'},{bg:'#EEE5DC',fill:'#071A22'},
+  {bg:'#071A22',fill:'#5F9DBB'},{bg:'#EEE5DC',fill:'#3E789B'},
+  {bg:'#071A22',fill:'#AC5753'},{bg:'#EEE5DC',fill:'#8E2C2C'}
+];
+const lg=document.getElementById('logoGrid');
+lv.forEach(v=>{
+  const d=document.createElement('div');
+  d.className='logo-version';
+  d.style.cssText='background:'+v.bg+';padding:14px 12px;border:1px solid #28404A;border-radius:2px';
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','0 0 560 242');
+  s.style.cssText='height:35px;width:auto;display:block;color:'+v.fill;
+  const u=document.createElementNS('http://www.w3.org/2000/svg','use');
+  u.setAttribute('href','#lp');
+  s.appendChild(u);d.appendChild(s);lg.appendChild(d);
+});
+const imgs=[
+  {src:'oil-can/mood01.jpg',label:'mood01',h:220},{src:'oil-can/mood02.jpg',label:'mood02',h:240},
+  {src:'oil-can/mood03.jpg',label:'mood03',h:260},{src:'oil-can/mood04.jpg',label:'mood04',h:230},
+  {src:'oil-can/mood05.jpg',label:'mood05',h:250},{src:'oil-can/mood06.jpg',label:'mood06',h:235},
+  {src:'oil-can/mood07.jpg',label:'mood07',h:245},{src:'oil-can/mood08.jpg',label:'mood08',h:225},
+  {src:'oil-can/mood09.jpg',label:'mood09',h:255},{src:'oil-can/mood10.jpg',label:'mood10',h:240}
+];
+const mg=document.getElementById('moodGrid');
+imgs.forEach(d=>{
+  const w=document.createElement('div');w.className='mood-item';
+  const ph=document.createElement('div');ph.className='mood-ph';ph.style.height=d.h+'px';
+  const sp=document.createElement('span');sp.textContent=d.label;ph.appendChild(sp);
+  const im=new Image();im.src=d.src;im.alt=d.label;
+  im.onload=()=>ph.replaceWith(im);
+  const ov=document.createElement('div');ov.className='mood-ov';
+  const ol=document.createElement('span');ol.textContent=d.label;ov.appendChild(ol);
+  w.appendChild(ph);w.appendChild(ov);mg.appendChild(w);
+});
+
+/* ---------- i18n ---------- */
+const I18N = {
+  pt:{
+    navPre:"Pré-produção", navCon:"Conceito e Plano", navVis:"Estética visual", navSon:"Estética sonora",
+    eyebrow:"projeto · v0.2 · 2026–2027",
+    heroLine:'<strong>3</strong> EPs com <strong>4</strong> faixas (lançamentos em 2027) &nbsp;•&nbsp; Faixas autorais: <strong>12</strong>',
+    slPre:"Pré-produção", slPret:"Pretensão", slObj:"Primeiro objetivo", slPlano:"O plano",
+    slLanc:"Lançamentos", slLogo:"Logotipo", slTipo:"Tipografia", slPal:"Paleta",
+    slMood:"Moodboard visual", slSon:"Estética sonora", slRefs:"Referências sonoras",
+    dlStems:"Faixas separadas (.zip)", lyr:"Letra", noLyr:"Sem letra", soon:"Em breve", coverPend:"capa pendente",
+    preprodNote:"12 faixas · divisão em EPs definida após a sessão",
+    mkArq:"Arquétipo", mvArq:"everyman — urbano", mkTom:"Tom de voz", mvTom:"direta · irônica · confiante",
+    mkEst:"Estilo", mkFor:"Formação",
+    pret1:'Ser <strong>relevante social e culturalmente</strong> para um grupo de pessoas que se importam com música, uma cena local, uma base de fãs em outro lugar. Presença em shows e ouvintes mensais no streaming são o termômetro. Mas entrega e crescimento são consequência, não pré-condição.',
+    pret2:'A vida adulta tem agenda própria. Por isso a energia da banda precisa ser gasta de forma <strong>estratégica</strong>: conteúdo que valha, eventos com retorno, público que consome música de verdade. Festivais, Bolacha Discos, espaços afins.',
+    pret3:'Composição e produção precisam ser momentos bons, recompensados pela própria experiência, independente do resultado.',
+    objTxt:"Criar repertório autoral e iniciar as primeiras apresentações.",
+    flow1t:"Uma sessão só",
+    flow1d:'Gravar as <strong style="color:var(--t1);font-weight:500">12 faixas de uma vez</strong>, ao vivo — baixo, bateria e guitarra tocando juntos.',
+    flow2t:"Depois, de 4 em 4 músicas", flow2d:"Cada bloco percorre o mesmo caminho, na ordem dos EPs:",
+    flow2l:'<li><strong>Captação final</strong> — vozes e efeitos por cima da base</li><li><strong>Mixagem e masterização</strong></li><li><strong>Audiovisual das 4</strong> — visualiser, lyric video, clipe ou capa</li><li><strong>Registro e distribuição</strong> — ISRC e envio à distribuidora</li><li><strong>Lançamento</strong> — com pitch no Spotify de 1 faixa de trabalho</li>',
+    flow3t:"Tudo em paralelo", flow3d:"Ninguém espera ninguém. Enquanto um bloco é finalizado, o próximo já está em fila e a banda não para.",
+    flow4t:"No fim",
+    flow4d:'<strong>3 EPs de 4 faixas, fechados.</strong> Sem singles avulsos, tudo dentro de 2027.<br>Depois: <strong>playlist consolidada no streaming</strong> + <strong>fita K7</strong> com as 12.',
+    lancNote:"3 EPs · 4 faixas cada · 1 faixa de trabalho por EP · ao menos um audiovisual por música",
+    epTracks:"<li>Faixa 01</li><li>Faixa 02</li><li>Faixa 03</li><li>Faixa 04</li>",
+    epNote:"visualiser · lyric video · clipe",
+    tipo1:"Display · Logo · Títulos — fontshare.com", tipo2:"Geist Mono — texto / labels",
+    pal1:"Primary — Azul petróleo", pal2:"Accent — Vermelho vinho", pal3:"Texto / Borda",
+    moodDesc:'Referência visual — palco em luz azul e vermelha, grão analógico, objeto urbano, cinema, itens analógicos.'
+  },
+  en:{
+    navPre:"Pre-production", navCon:"Concept & Plan", navVis:"Visual identity", navSon:"Sonic identity",
+    eyebrow:"project · v0.2 · 2026–2027",
+    heroLine:'<strong>3</strong> EPs of <strong>4</strong> tracks (releasing in 2027) &nbsp;•&nbsp; Original tracks: <strong>12</strong>',
+    slPre:"Pre-production", slPret:"Ambition", slObj:"First goal", slPlano:"The plan",
+    slLanc:"Releases", slLogo:"Logo", slTipo:"Typography", slPal:"Palette",
+    slMood:"Visual moodboard", slSon:"Sonic identity", slRefs:"Sonic references",
+    dlStems:"Stems (.zip)", lyr:"Lyrics", noLyr:"No lyrics", soon:"Coming soon", coverPend:"cover pending",
+    preprodNote:"12 tracks · EP split decided after the session",
+    mkArq:"Archetype", mvArq:"everyman — urban", mkTom:"Tone of voice", mvTom:"direct · ironic · confident",
+    mkEst:"Style", mkFor:"Line-up",
+    pret1:'To be <strong>socially and culturally relevant</strong> to a group of people who care about music — a local scene, say, or a fanbase somewhere else. A fair measure might be people showing up at gigs, and monthly listeners on streaming. But output and growth are a consequence, not a condition for existing.',
+    pret2:'Adult life keeps its own schedule. So the band’s energy has to be spent <strong>strategically</strong>: content worth making, gigs that give something back, audiences that actually consume music. Festivals, Bolacha Discos, rooms of that kind.',
+    pret3:'Writing and producing have to be good moments, rewarded by the experience itself, whatever the outcome.',
+    objTxt:"Build an original repertoire and start playing live.",
+    flow1t:"One session only",
+    flow1d:'Record <strong style="color:var(--t1);font-weight:500">all 12 tracks at once</strong>, live — bass, drums and guitar playing together.',
+    flow2t:"Then, four songs at a time", flow2d:"Each block runs the same path, in EP order:",
+    flow2l:'<li><strong>Final tracking</strong> — vocals and effects over the base</li><li><strong>Mixing and mastering</strong></li><li><strong>Visuals for all four</strong> — visualiser, lyric video, music video or cover art</li><li><strong>Registration and distribution</strong> — ISRC and submission to the distributor</li><li><strong>Release</strong> — with a Spotify pitch on one focus track</li>',
+    flow3t:"All in parallel", flow3d:"Nobody waits for anybody. While one block is being finished, the next is already queued and the band keeps playing.",
+    flow4t:"In the end",
+    flow4d:'<strong>Three closed EPs of four tracks.</strong> No standalone singles, all within 2027.<br>Then: a <strong>consolidated playlist</strong> on streaming + the <strong>K7 tape</strong> with all twelve.',
+    lancNote:"3 EPs · 4 tracks each · 1 focus track per EP · at least one video per song",
+    epTracks:"<li>Track 01</li><li>Track 02</li><li>Track 03</li><li>Track 04</li>",
+    epNote:"visualiser · lyric video · music video",
+    tipo1:"Display · Logo · Headings — fontshare.com", tipo2:"Geist Mono — text / labels",
+    pal1:"Primary — Petrol blue", pal2:"Accent — Wine red", pal3:"Text / Border",
+    moodDesc:'Visual reference — stage in blue and red light, analog grain, urban objects, cinema, analog items.'
+  }
+};
+function setLang(lang){
+  const d = I18N[lang] || I18N.en;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v = d[el.dataset.i18n];
+    if (v !== undefined) el.innerHTML = v;
+  });
+  document.documentElement.lang = (lang === 'pt') ? 'pt-BR' : 'en';
+  document.querySelectorAll('.lang-btn').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang === lang));
+  try { localStorage.setItem('ocLang', lang); } catch(e) {}
+}
+document.querySelectorAll('.lang-btn').forEach(b=>{
+  b.addEventListener('click', ()=> setLang(b.dataset.lang));
+});
+let startLang = 'en';
+try { const saved = localStorage.getItem('ocLang'); if (saved === 'pt' || saved === 'en') startLang = saved; } catch(e) {}
+setLang(startLang);
+
+/* ---------- modal de ajuda ---------- */
+const HELP = {
+  arquetipos:{
+    img:"oil-can/help/arquetipos.jpg",
+    pt:{
+      title:"Arquétipo",
+      body:'<p class="modal-h">Conceito</p>'+
+           '<p class="modal-p">Arquétipos ajudam a moldar a personalidade de uma marca, criando uma conexão emocional com o público. São doze padrões narrativos — cada um com um desejo central e uma forma própria de falar.</p>'+
+           '<p class="modal-h">O arquétipo do Oil Can No. 9</p>'+
+           '<p class="modal-p"><strong>Everyman — urbano.</strong> Desejo central: <strong>pertencimento</strong>. Fala de igual para igual, sem pose de estrela nem de gênio incompreendido. É a banda que ensaia depois do expediente e sabe disso.</p>'+
+           '<p class="modal-h">Exemplos de marcas com o arquétipo Everyman</p>'+
+           '<p class="modal-p">Volkswagen, IKEA.</p>'
+    },
+    en:{
+      title:"Archetype",
+      body:'<p class="modal-h">Concept</p>'+
+           '<p class="modal-p">Archetypes help shape a brand’s personality, creating an emotional connection with its audience. There are twelve narrative patterns — each with a core desire and a way of speaking of its own.</p>'+
+           '<p class="modal-h">Oil Can No. 9’s archetype</p>'+
+           '<p class="modal-p"><strong>Everyman — urban.</strong> Core desire: <strong>belonging</strong>. Speaks as an equal — no rock-star pose, no misunderstood-genius act. It is the band that rehearses after work and knows it.</p>'+
+           '<p class="modal-h">Brands with the Everyman archetype</p>'+
+           '<p class="modal-p">Volkswagen, IKEA.</p>'
+    }
+  }
+};
+const helpOv = document.getElementById('helpOv');
+const helpTitle = document.getElementById('helpTitle');
+const helpBody = document.getElementById('helpBody');
+let helpLast = null;
+
+function openModal(title, html, imgSrc){
+  helpTitle.textContent = title;
+  const img = imgSrc ? '<img class="modal-img" src="'+imgSrc+'" alt="" onerror="this.style.display=\'none\'">' : '';
+  helpBody.innerHTML = html + img;
+  helpBody.scrollTop = 0;
+  helpLast = document.activeElement;
+  helpOv.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('helpX').focus();
+}
+function openHelp(id){
+  const h = HELP[id]; if(!h) return;
+  const lang = (document.documentElement.lang === 'pt-BR') ? 'pt' : 'en';
+  const c = h[lang] || h.en;
+  openModal(c.title, c.body, h.img);
+}
+function closeHelp(){
+  helpOv.classList.remove('open');
+  document.body.style.overflow = '';
+  if (helpLast && helpLast.focus) helpLast.focus();
+}
+document.querySelectorAll('[data-help]').forEach(b=>{
+  b.addEventListener('click', e=>{ e.stopPropagation(); openHelp(b.dataset.help); });
+});
+document.getElementById('helpX').addEventListener('click', closeHelp);
+helpOv.addEventListener('click', e=>{ if(e.target === helpOv) closeHelp(); });
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && helpOv.classList.contains('open')) closeHelp(); });
+
+</script>
+</body>
+</html>
