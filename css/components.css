@@ -71,7 +71,6 @@
 
 .nav__tab[aria-selected='true'] {
   color: var(--accent-text);
-  box-shadow: inset 0 -2px 0 var(--accent);
 }
 
 /* O hambúrguer compartilha a base de .nav__tab (que define
