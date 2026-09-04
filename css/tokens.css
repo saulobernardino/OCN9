@@ -199,11 +199,6 @@
   --shadow-md: 0 4px 16px rgba(6, 6, 6, 0.08);
   --shadow-lg: 0 16px 48px rgba(6, 6, 6, 0.14);
   --scrim: rgba(6, 6, 6, 0.62);
-
-  /* Marca aplicada na UI — usados pelos sprites SVG inline */
-  --logo-plate: var(--brand-black);
-  --logo-knockout: var(--brand-white);
-  --logo-accent: var(--brand-red);
 }
 
 /* ------------------------------------------------------------
@@ -256,10 +251,6 @@
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.55);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.7);
   --scrim: rgba(0, 0, 0, 0.78);
-
-  --logo-plate: var(--brand-white);
-  --logo-knockout: var(--brand-black);
-  --logo-accent: var(--red-300);
 }
 
 /* Fallback para quem reusar estes tokens sem data-theme no <html>.
@@ -308,9 +299,5 @@
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.55);
     --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.7);
     --scrim: rgba(0, 0, 0, 0.78);
-
-    --logo-plate: var(--brand-white);
-    --logo-knockout: var(--brand-black);
-    --logo-accent: var(--red-300);
   }
 }

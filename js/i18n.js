@@ -90,9 +90,7 @@ window.OCN9_I18N = {
     slLogo: 'Logotipo',
     logoIntro:
       'A placa com o nome. É a assinatura padrão da marca — use quando o público ainda não tem o repertório visual para reconhecer só o símbolo: capa de release, cabeçalho, cartaz, ficha técnica.',
-    logoFiles: 'Arquivos: <code>logo-1color.svg</code> · <code>logo-2colors.svg</code> · <code>logo-negative.svg</code>',
-    logoRule:
-      'A versão de duas cores reserva o vermelho <strong>só para o No. 9</strong>. Sobre fundo azul ou vermelho, o vermelho sai e o logotipo volta a ser monocromático — a placa fica branca e o texto assume a cor do fundo.',
+    logoFiles: 'Arquivos: <code>logo-1color.svg</code> · <code>logo-negative.svg</code>',
 
     slMerch: 'Merch',
     merchIntro:
@@ -226,9 +224,7 @@ window.OCN9_I18N = {
     slLogo: 'Logo',
     logoIntro:
       'The plate with the name. This is the brand’s default signature — use it wherever the audience does not yet have the visual vocabulary to recognise the symbol alone: release covers, headers, posters, credits.',
-    logoFiles: 'Files: <code>logo-1color.svg</code> · <code>logo-2colors.svg</code> · <code>logo-negative.svg</code>',
-    logoRule:
-      'The two-colour version reserves red <strong>for the No. 9 only</strong>. On a blue or red ground the red drops out and the logo goes monochrome again — the plate turns white and the type takes the colour of the ground.',
+    logoFiles: 'Files: <code>logo-1color.svg</code> · <code>logo-negative.svg</code>',
 
     slMerch: 'Merch',
     merchIntro:

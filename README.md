@@ -84,9 +84,10 @@ que se vê antes do JS rodar.
 
 ## Marca nesta página
 
-- **Logotipo**: SVG inline (`#ocn9-logo`, `#ocn9-logo-2c`) para poder trocar de
-  cor por CSS. O mono usa `currentColor`; o de duas cores lê `--logo-plate`,
-  `--logo-knockout` e `--logo-accent`.
+- **Logotipo**: SVG inline (`#ocn9-logo`), só na versão monocromática — usa
+  `currentColor` para trocar de cor por CSS. A aplicação em duas cores existiu
+  e foi descontinuada; não use `logo-2colors.svg` nem o reintroduza sem que
+  isso seja pedido de novo.
 - **Símbolo**: entra por `<img>`. O traço é texturizado e os arquivos são
   grandes demais para inline — por isso existem três variantes prontas em vez
   de uma recolorível.
