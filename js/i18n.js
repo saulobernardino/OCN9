@@ -94,7 +94,7 @@ window.OCN9_I18N = {
 
     slMerch: 'Merch',
     merchIntro:
-      'Renders de IA a partir dos prompts em <code>mockup-prompts.md</code> — pré-visualização rápida da direção, não é arte final de produção.',
+      'Renders de IA, pré-visualização rápida da direção, não é arte final de produção.',
     merchTee: 'Camiseta — logotipo na frente, símbolo nas costas',
     merchTeeRed: 'Camiseta — variação vermelha',
     merchK7: 'Fita K7 — sobre o amplificador',
