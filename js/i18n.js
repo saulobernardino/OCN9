@@ -228,7 +228,7 @@ window.OCN9_I18N = {
 
     slMerch: 'Merch',
     merchIntro:
-      'AI-generated concept renders from the prompts in <code>mockup-prompts.md</code> — a quick preview of the direction, not final production art.',
+      'AI-generated concept renders, a quick preview of the direction, not final production art.',
     merchTee: 'Tee — logo on the chest, symbol on the back',
     merchTeeRed: 'Tee — red colourway',
     merchK7: 'Cassette — on the amp rig',
