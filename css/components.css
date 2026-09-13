@@ -331,6 +331,26 @@
   line-height: 1;
 }
 
+/* Botão cheio — só para a ação primária de uma seção. Um por tela. */
+.btn--accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn--accent:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--accent-contrast);
+}
+
+.btn__count {
+  padding-inline: var(--sp-2);
+  border-left: var(--border-width) solid currentColor;
+  margin-left: var(--sp-1);
+  opacity: 0.7;
+}
+
 /* Botão "?" que abre o modal de contexto. */
 .btn-help {
   display: inline-flex;
@@ -455,9 +475,32 @@
   color: var(--text-muted);
 }
 
-.track__player audio {
-  border-radius: var(--radius-sm);
-  outline: none;
+/* Linha de ações do card: tocar + os dois downloads. */
+.track__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.btn--play svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* A faixa que está no player fica marcada no card e na fila — é o
+   único jeito de saber de onde vem o som depois de rolar a página. */
+.btn--play[aria-pressed='true'] {
+  color: var(--accent-text);
+  border-color: var(--accent-border);
+  background: var(--accent-surface);
+}
+
+.track.is-current {
+  box-shadow: inset var(--sp-1) 0 0 var(--accent);
+}
+
+.track.is-current .track__title {
+  color: var(--accent-text);
 }
 
 /* Corpo da letra: fica escondido no card e é lido pelo modal. */
@@ -1324,4 +1367,307 @@
   font-size: var(--fs-2xs);
   letter-spacing: var(--ls-wide);
   color: var(--text-muted);
+}
+
+/* ============================================================
+   PLAYER
+   Barra fixa no rodapé + fila. Aparece só quando algo toca, some
+   quando o visitante fecha — a página é um documento antes de ser
+   um tocador, e três das quatro abas não têm áudio nenhum.
+   Nada aqui declara valor cru: tamanhos de controle vêm da escala
+   de espaço, porque a régua é a mesma.
+   ============================================================ */
+
+.player {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  background: var(--surface-raised);
+  border-top: var(--border-width) solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.player__bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(220px, 1.6fr) auto;
+  grid-template-areas: 'transport now seek tools';
+  align-items: center;
+  gap: var(--sp-5);
+  min-height: var(--layout-player-h);
+  max-width: var(--layout-max-w);
+  margin-inline: auto;
+  padding: var(--sp-2) var(--layout-px);
+}
+
+.player__transport { grid-area: transport; display: flex; align-items: center; gap: var(--sp-1); }
+.player__now       { grid-area: now; display: flex; flex-direction: column; min-width: 0; }
+.player__seek      { grid-area: seek; display: flex; align-items: center; gap: var(--sp-3); }
+.player__tools     { grid-area: tools; display: flex; align-items: center; gap: var(--sp-2); }
+
+/* ---------- Controles ---------- */
+
+.player__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sp-8);
+  height: var(--sp-8);
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+.player__btn:hover {
+  color: var(--accent-text);
+  background: var(--surface-hover);
+}
+
+.player__btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.player__btn--main {
+  width: var(--sp-10);
+  height: var(--sp-10);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.player__btn--main:hover {
+  background: var(--accent-hover);
+  color: var(--accent-contrast);
+}
+
+.player__btn--main svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Identificação ---------- */
+
+.player__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xs);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.player__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  font-style: italic;
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Posição na faixa ---------- */
+
+.player__time {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+/* O trecho já tocado vem de --p, escrito pelo JS a cada frame. É a
+   única propriedade inline da página — e é um valor, não um estado:
+   estado continua em classe `is-*`. */
+.player__range {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: var(--sp-4);
+  background: transparent;
+  cursor: pointer;
+}
+
+.player__range::-webkit-slider-runnable-track {
+  height: var(--sp-1);
+  border-radius: var(--radius-full);
+  background: linear-gradient(to right,
+    var(--accent) var(--p, 0%), var(--border-strong) var(--p, 0%));
+}
+
+.player__range::-moz-range-track {
+  height: var(--sp-1);
+  border-radius: var(--radius-full);
+  background: linear-gradient(to right,
+    var(--accent) var(--p, 0%), var(--border-strong) var(--p, 0%));
+}
+
+.player__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--sp-3);
+  height: var(--sp-3);
+  margin-top: calc((var(--sp-1) - var(--sp-3)) / 2);
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+.player__range::-moz-range-thumb {
+  width: var(--sp-3);
+  height: var(--sp-3);
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+/* ---------- Modo contínuo ---------- */
+
+.player__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+
+.player__chip svg {
+  width: 12px;
+  height: 12px;
+}
+
+.player__chip:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-strong);
+}
+
+.player__chip[aria-pressed='true'] {
+  color: var(--accent-text);
+  border-color: var(--accent-border);
+  background: var(--accent-surface);
+}
+
+/* ---------- Fila ---------- */
+
+/* Mesma superfície da barra: a fila lê como o player crescendo,
+   não como um painel solto em cima da página. */
+.player__queue {
+  position: absolute;
+  bottom: 100%;
+  inset-inline: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: var(--surface-raised);
+  border-top: var(--border-width) solid var(--border-strong);
+  border-bottom: var(--border-width) solid var(--border-default);
+  box-shadow: var(--shadow-lg);
+}
+
+.player__queue-title,
+.player__list {
+  max-width: var(--layout-max-w);
+  margin-inline: auto;
+  padding-inline: var(--layout-px);
+}
+
+.player__queue-title {
+  padding-block: var(--sp-4) var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xs);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.player__list {
+  list-style: none;
+  padding-bottom: var(--sp-4);
+}
+
+.player__item {
+  display: grid;
+  grid-template-columns: var(--sp-6) minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.player__item:hover {
+  background: var(--surface-hover);
+}
+
+.player__index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+
+.player__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  font-style: italic;
+  letter-spacing: var(--ls-display);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Mesma marca do card: barra azul à esquerda. O azul claro do tema
+   escuro sozinho é discreto demais numa linha de 12px. */
+.player__item.is-current {
+  background: var(--accent-surface);
+  box-shadow: inset var(--sp-1) 0 0 var(--accent);
+}
+
+.player__item.is-current .player__index,
+.player__item.is-current .player__name,
+.player__item.is-current .player__meta {
+  color: var(--accent-text);
+}
+
+/* ---------- Barra estreita ---------- */
+
+@media (max-width: 760px) {
+  .player__bar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'transport now tools'
+      'seek seek seek';
+    gap: var(--sp-3) var(--sp-4);
+    min-height: var(--layout-player-h-sm);
+  }
+
+  /* Sem espaço para o rótulo: sobra o ícone, e o nome acessível
+     continua no aria-label. */
+  .player__chip span { display: none; }
+  .player__chip { padding-inline: var(--sp-2); }
 }

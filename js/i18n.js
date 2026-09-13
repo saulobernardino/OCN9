@@ -24,10 +24,26 @@ window.OCN9_I18N = {
     /* --- pré-produção --- */
     slPre: 'Pré-produção',
     preprodNote: '12 faixas · divisão em EPs definida após a sessão',
+    dlMp3: 'Música (.mp3)',
     dlStems: 'Faixas separadas (.zip)',
     lyr: 'Letra',
     noLyr: 'Sem letra',
     soon: 'Em breve',
+    playAll: 'Tocar tudo',
+
+    /* --- player --- */
+    play: 'Tocar',
+    pause: 'Pausar',
+    pNow: 'Tocando agora',
+    pRegion: 'Player',
+    pPrev: 'Faixa anterior',
+    pNext: 'Próxima faixa',
+    pPlay: 'Tocar',
+    pPause: 'Pausar',
+    pSeek: 'Posição na faixa',
+    pQueue: 'Fila',
+    pSeq: 'Sequência',
+    pClose: 'Fechar player',
 
     /* --- conceito e plano --- */
     mkArq: 'Arquétipo',
@@ -162,10 +178,25 @@ window.OCN9_I18N = {
 
     slPre: 'Pre-production',
     preprodNote: '12 tracks · EP split decided after the session',
+    dlMp3: 'Song (.mp3)',
     dlStems: 'Stems (.zip)',
     lyr: 'Lyrics',
     noLyr: 'No lyrics',
     soon: 'Coming soon',
+    playAll: 'Play all',
+
+    play: 'Play',
+    pause: 'Pause',
+    pNow: 'Now playing',
+    pRegion: 'Player',
+    pPrev: 'Previous track',
+    pNext: 'Next track',
+    pPlay: 'Play',
+    pPause: 'Pause',
+    pSeek: 'Seek',
+    pQueue: 'Queue',
+    pSeq: 'Continuous',
+    pClose: 'Close player',
 
     mkArq: 'Archetype',
     mvArq: 'everyman — urban',

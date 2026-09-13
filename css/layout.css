@@ -292,3 +292,15 @@
     gap: var(--sp-2);
   }
 }
+
+/* ---------- Player aberto ---------- */
+
+/* A barra é fixa: sem esta reserva ela cobre o rodapé no fim da
+   página. O valor é a altura da própria barra, do mesmo token. */
+.has-player {
+  padding-bottom: var(--layout-player-h);
+}
+
+@media (max-width: 760px) {
+  .has-player { padding-bottom: var(--layout-player-h-sm); }
+}

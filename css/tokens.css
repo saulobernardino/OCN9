@@ -135,6 +135,12 @@
   --layout-max-w: 1200px;
   --layout-px: 40px;      /* sobrescrito nos breakpoints em layout.css */
 
+  /* Altura da barra do player. Serve para reservar o espaço no fim
+     da página enquanto ela está aberta — medida, não arbitrária:
+     abaixo de 760px a barra quebra em duas linhas. */
+  --layout-player-h: 60px;
+  --layout-player-h-sm: 108px;
+
   /* Empilhamento */
   --z-base: 1;
   --z-sticky: 50;

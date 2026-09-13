@@ -1,7 +1,7 @@
 /* ============================================================
    OCN9 — app.js
    Comportamento da página. Sem dependências.
-   Blocos: tema · abas · idioma · moodboard · modal.
+   Blocos: tema · abas · idioma · moodboard · modal · player.
    Cada bloco é isolado e sai sem erro se o markup dele não
    existir na página — assim o arquivo serve para as próximas
    páginas do projeto sem edição.
@@ -182,11 +182,27 @@
      ========================================================== */
   var DICT = window.OCN9_I18N || {};
 
+  /* Dicionário em vigor. O player escreve rótulos que o HTML não tem
+     como carregar (o nome muda com o estado), e lê daqui. */
+  var STRINGS = {};
+
+  /* Preenchido pelo bloco do player, mais abaixo. setLang chama no
+     fim: o dicionário acabou de reescrever os rótulos estáticos e os
+     que dependem de estado precisam voltar. */
+  var syncPlayer = null;
+
   function setLang(lang, persist) {
     var dict = DICT[lang] || DICT[DEFAULT_LANG] || {};
+    STRINGS = dict;
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var value = dict[el.dataset.i18n];
       if (value !== undefined) el.innerHTML = value;
+    });
+    /* Mesmo dicionário, outro destino: controle só com ícone leva o
+       texto no atributo, não no conteúdo. */
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var value = dict[el.dataset.i18nAria];
+      if (value !== undefined) el.setAttribute('aria-label', value);
     });
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
     document.querySelectorAll('[data-lang]').forEach(function (btn) {
@@ -195,6 +211,7 @@
     /* O rótulo da barra é uma cópia do texto da aba ativa: precisa
        ser refeito depois que o dicionário reescreve as abas. */
     syncCurrentLabel();
+    if (syncPlayer) syncPlayer();
     if (persist) writeStore(STORAGE_LANG, lang);
   }
 
@@ -374,4 +391,303 @@
       openModal(content.title, content.body, entry.image);
     });
   });
+
+  /* ==========================================================
+     PLAYER
+     Um <audio> só, compartilhado. Isso resolve de graça o
+     problema que quatro <audio controls> tinham: dois nunca
+     tocam juntos porque só existe um elemento.
+
+     A fila é lida do DOM, na ordem em que os cards estão —
+     reordenar as faixas no HTML reordena o player junto, sem
+     lista duplicada em lugar nenhum.
+
+     Modo contínuo nasce DESLIGADO. Quem clica em uma faixa quer
+     aquela faixa; quem quer o disco inteiro clica em "Tocar
+     tudo", que liga o modo. O botão da barra troca a qualquer
+     momento, e avançar/voltar na mão funciona dos dois jeitos —
+     o modo só decide o que acontece quando a faixa acaba.
+     ========================================================== */
+  var dock = document.getElementById('player');
+  var audio = document.getElementById('playerAudio');
+
+  if (dock && audio) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('[data-track][data-src]'));
+    var titleEl = document.getElementById('playerTitle');
+    var curEl = document.getElementById('playerCur');
+    var durEl = document.getElementById('playerDur');
+    var range = document.getElementById('playerRange');
+    var queue = document.getElementById('playerQueue');
+    var listEl = document.getElementById('playerList');
+    var queueBtn = dock.querySelector('[data-p="queue"]');
+    var seqBtn = dock.querySelector('[data-p="seq"]');
+    var mainBtn = dock.querySelector('[data-p="toggle"]');
+    var playAllBtn = document.getElementById('playAll');
+    var playAllCount = document.getElementById('playAllCount');
+
+    var index = -1;        /* faixa carregada; -1 = player fechado */
+    var sequential = false;
+    var scrubbing = false;
+
+    function t(key, fallback) {
+      return STRINGS[key] !== undefined ? STRINGS[key] : fallback;
+    }
+
+    function nameOf(card) {
+      return card.querySelector('.track__title').textContent.trim();
+    }
+
+    function bpmOf(card) {
+      var el = card.querySelector('.track__bpm');
+      return el ? el.textContent.trim() : '';
+    }
+
+    /* Duração só existe depois dos metadados; até lá, traço. */
+    function clock(seconds) {
+      if (!isFinite(seconds) || seconds < 0) return '—:—';
+      var total = Math.floor(seconds);
+      return Math.floor(total / 60) + ':' + String(total % 60).padStart(2, '0');
+    }
+
+    function setIcons(scope, playing) {
+      scope.querySelectorAll('[data-play-icon]').forEach(function (icon) {
+        icon.toggleAttribute('hidden', icon.getAttribute('data-play-icon') !== (playing ? 'pause' : 'play'));
+      });
+    }
+
+    /* Um único lugar desenha o estado — barra, cards e fila saem
+       sempre da mesma leitura, então não têm como divergir. */
+    function render() {
+      var playing = index >= 0 && !audio.paused;
+
+      cards.forEach(function (card, i) {
+        var isCurrent = i === index;
+        var btn = card.querySelector('[data-play]');
+        var label = card.querySelector('[data-play-label]');
+        var cardPlaying = isCurrent && playing;
+        card.classList.toggle('is-current', isCurrent && index >= 0);
+        if (btn) {
+          btn.setAttribute('aria-pressed', String(cardPlaying));
+          setIcons(btn, cardPlaying);
+        }
+        if (label) label.textContent = cardPlaying ? t('pause', 'Pause') : t('play', 'Play');
+      });
+
+      listEl.querySelectorAll('.player__item').forEach(function (item, i) {
+        item.classList.toggle('is-current', i === index);
+      });
+
+      if (mainBtn) {
+        setIcons(mainBtn, playing);
+        mainBtn.setAttribute('aria-label', playing ? t('pPause', 'Pause') : t('pPlay', 'Play'));
+      }
+      if (seqBtn) seqBtn.setAttribute('aria-pressed', String(sequential));
+      titleEl.textContent = index >= 0 ? nameOf(cards[index]) : '—';
+    }
+
+    syncPlayer = render;
+
+    function progress() {
+      var ratio = isFinite(audio.duration) && audio.duration ? audio.currentTime / audio.duration : 0;
+      if (!scrubbing) range.value = String(Math.round(ratio * 1000));
+      /* Propriedade custom, não estilo de estado: o CSS pinta o
+         trecho já tocado a partir dela. */
+      range.style.setProperty('--p', (ratio * 100).toFixed(2) + '%');
+      curEl.textContent = clock(audio.currentTime);
+    }
+
+    function openDock() {
+      if (!dock.hidden) return;
+      dock.hidden = false;
+      document.body.classList.add('has-player');
+    }
+
+    function closeDock() {
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+      index = -1;
+      setQueue(false);
+      dock.hidden = true;
+      document.body.classList.remove('has-player');
+      range.value = '0';
+      range.style.setProperty('--p', '0%');
+      curEl.textContent = '0:00';
+      durEl.textContent = '0:00';
+      render();
+    }
+
+    function load(i) {
+      if (i < 0 || i >= cards.length) return;
+      index = i;
+      audio.src = cards[i].dataset.src;
+      durEl.textContent = '—:—';
+      curEl.textContent = '0:00';
+      range.value = '0';
+      range.style.setProperty('--p', '0%');
+      announce();
+    }
+
+    /* play() pode ser recusado (política de autoplay). Se for, o
+       estado tem de voltar a "pausado" em vez de mentir. */
+    function start() {
+      openDock();
+      var attempt = audio.play();
+      if (attempt && attempt.catch) attempt.catch(function () {});
+      render();
+    }
+
+    function toggle() {
+      if (index < 0) return;
+      if (audio.paused) start();
+      else { audio.pause(); render(); }
+    }
+
+    function step(delta) {
+      if (index < 0) return;
+      /* Convenção de tocador: "anterior" no meio da faixa volta ao
+         começo dela, e só na cabeça é que pula para a de trás. */
+      if (delta < 0 && audio.currentTime > 3) {
+        audio.currentTime = 0;
+        return;
+      }
+      load((index + delta + cards.length) % cards.length);
+      start();
+    }
+
+    function setQueue(open) {
+      queue.hidden = !open;
+      if (queueBtn) queueBtn.setAttribute('aria-expanded', String(open));
+    }
+
+    /* Integração com as teclas de mídia e a tela de bloqueio. */
+    function announce() {
+      if (!('mediaSession' in navigator) || index < 0) return;
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: nameOf(cards[index]),
+        artist: 'Oil Can No. 9',
+        album: 'Pre-production'
+      });
+    }
+
+    /* ---- fila ---- */
+    cards.forEach(function (card, i) {
+      var item = document.createElement('li');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'player__item';
+
+      var n = document.createElement('span');
+      n.className = 'player__index';
+      n.textContent = String(i + 1).padStart(2, '0');
+
+      var name = document.createElement('span');
+      name.className = 'player__name';
+      name.textContent = nameOf(card);
+
+      var meta = document.createElement('span');
+      meta.className = 'player__meta';
+      meta.textContent = bpmOf(card);
+
+      btn.appendChild(n);
+      btn.appendChild(name);
+      btn.appendChild(meta);
+      btn.addEventListener('click', function () {
+        load(i);
+        start();
+        /* Escolher na fila é pedir para ver a faixa: o card também
+           é onde estão letra e downloads — e a fila estava por cima
+           dele. */
+        setQueue(false);
+        card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      });
+
+      item.appendChild(btn);
+      listEl.appendChild(item);
+    });
+
+    /* ---- gatilhos ---- */
+    cards.forEach(function (card, i) {
+      var btn = card.querySelector('[data-play]');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        if (i === index) { toggle(); return; }
+        /* Tocar uma faixa é pedir uma faixa: o modo contínuo não
+           liga sozinho aqui. */
+        load(i);
+        start();
+      });
+    });
+
+    if (playAllBtn) {
+      if (playAllCount) playAllCount.textContent = String(cards.length);
+      playAllBtn.hidden = cards.length === 0;
+      playAllBtn.addEventListener('click', function () {
+        sequential = true;
+        load(0);
+        start();
+      });
+    }
+
+    dock.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-p]');
+      if (!btn) return;
+      var action = btn.dataset.p;
+      if (action === 'toggle') toggle();
+      else if (action === 'next') step(1);
+      else if (action === 'prev') step(-1);
+      else if (action === 'close') closeDock();
+      else if (action === 'queue') setQueue(queue.hidden);
+      else if (action === 'seq') {
+        sequential = !sequential;
+        render();
+      }
+    });
+
+    /* A fila cobre conteúdo: fecha ao clicar fora e no Esc. */
+    document.addEventListener('click', function (e) {
+      if (!queue.hidden && !dock.contains(e.target)) setQueue(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !queue.hidden) {
+        setQueue(false);
+        if (queueBtn) queueBtn.focus();
+      }
+    });
+
+    range.addEventListener('pointerdown', function () { scrubbing = true; });
+    range.addEventListener('input', function () {
+      var ratio = Number(range.value) / 1000;
+      range.style.setProperty('--p', (ratio * 100).toFixed(2) + '%');
+      if (isFinite(audio.duration)) curEl.textContent = clock(ratio * audio.duration);
+    });
+    range.addEventListener('change', function () {
+      if (isFinite(audio.duration)) audio.currentTime = (Number(range.value) / 1000) * audio.duration;
+      scrubbing = false;
+    });
+
+    audio.addEventListener('loadedmetadata', function () { durEl.textContent = clock(audio.duration); });
+    audio.addEventListener('timeupdate', progress);
+    audio.addEventListener('play', render);
+    audio.addEventListener('pause', render);
+
+    audio.addEventListener('ended', function () {
+      if (sequential && index < cards.length - 1) {
+        load(index + 1);
+        start();
+      } else {
+        render();
+      }
+    });
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setActionHandler('previoustrack', function () { step(-1); });
+      navigator.mediaSession.setActionHandler('nexttrack', function () { step(1); });
+    }
+
+    /* setLang roda antes deste bloco existir, então a primeira
+       pintura dos rótulos de estado acontece aqui. */
+    render();
+  }
 })();

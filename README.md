@@ -17,7 +17,7 @@ OCN9/
 │  └─ utilities.css      exceções de uma propriedade — sempre por último
 ├─ js/
 │  ├─ i18n.js            dicionário PT/EN, único lugar com texto de interface
-│  └─ app.js             tema, abas, idioma, moodboard, modal
+│  └─ app.js             tema, abas, idioma, moodboard, modal, player
 ├─ assets/
 │  ├─ audio/             pré-produção (.mp3) e stems (.zip)
 │  ├─ covers/            capas dos EPs — vazia; a página cai no placeholder
@@ -82,6 +82,13 @@ Todo nó traduzível carrega `data-i18n="chave"`. As duas metades de
 faltar uma. Ao editar uma frase, **edite o dicionário e o HTML**: o HTML é o
 que se vê antes do JS rodar.
 
+Controle que só tem ícone não tem onde pôr texto: esse usa
+`data-i18n-aria="chave"`, que manda o mesmo dicionário para o `aria-label` em
+vez do conteúdo. E rótulo que muda com o estado (Tocar/Pausar) não pode vir do
+HTML — o dicionário sobrescreveria o estado atual a cada troca de idioma. Por
+isso `setLang` chama `syncPlayer()` no fim: o player redesenha o que é dele
+depois que o dicionário passa.
+
 ## Marca nesta página
 
 - **Logotipo**: SVG inline (`#ocn9-logo`), só na versão monocromática — usa
@@ -95,6 +102,34 @@ que se vê antes do JS rodar.
   vale por face: camiseta com logotipo na frente e símbolo nas costas está
   correta, porque nunca se vê os dois de uma vez. A aba de identidade visual
   documenta isso.
+
+## Player
+
+Existe **um** `<audio>` na página, escondido, compartilhado pelos quatro cards
+com áudio e pela fila. Isso resolve de graça o problema que quatro
+`<audio controls>` tinham: dois nunca tocam juntos porque só existe um
+elemento. Também deixou de baixar os quatro mp3 no load — nada de áudio sai do
+servidor antes de alguém apertar tocar.
+
+A barra é **fixa no rodapé e só aparece quando algo toca**. Não é sidebar de
+propósito: a página tem quatro abas e só uma tem áudio, então uma coluna fixa
+cobraria largura nas outras três o tempo todo. A barra não cobra nada enquanto
+está fechada, sobrevive à rolagem e acompanha a troca de aba — dá para ouvir
+lendo o resto. Enquanto está aberta, `body.has-player` reserva a altura dela
+no fim da página, senão a barra tapa o rodapé.
+
+**Modo contínuo nasce desligado.** Quem clica em uma faixa quer aquela faixa e
+o som para no fim dela; quem quer o bloco inteiro clica em *Tocar tudo*, que
+liga o modo. O botão da barra troca a qualquer momento, e avançar/voltar na
+mão funciona nos dois casos — o modo só decide o que acontece **quando a faixa
+acaba**, e no fim da fila ele para em vez de voltar ao começo.
+
+A fila sai do DOM, na ordem em que os cards estão: **reordenar as faixas no
+HTML reordena o player junto**, sem segunda lista para manter em dia. Um card
+entra na fila quando tem `data-track` e `data-src`; sem isso ele é só um card.
+
+`render()` é o único lugar que desenha estado — barra, card e fila saem sempre
+da mesma leitura, então não têm como divergir.
 
 ## Design system
 
@@ -114,3 +149,7 @@ as da marca Oil Can No. 9.
 ```bash
 cd "/Users/saulobernardino/Desktop/Claude" && node OCN9/.server.js
 ```
+
+O servidor responde `Range` e manda `Content-Length`. Não é capricho: sem
+isso o navegador não descobre a duração do mp3 (`duration` vira `Infinity`) e
+a barra do player não deixa arrastar.
