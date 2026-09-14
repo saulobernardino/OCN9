@@ -54,7 +54,7 @@ window.OCN9_I18N = {
     mkFor: 'Formação',
     slPret: 'Pretensão',
     pret1:
-      'Ser <strong>relevante social e culturalmente</strong> para um grupo de pessoas que se importam com música, uma cena local, uma base de fãs em outro lugar. Presença em shows e ouvintes mensais no streaming são o termômetro. Mas entrega e crescimento são consequência, não pré-condição.',
+      'Ser <strong>relevante social e culturalmente</strong> para um grupo de pessoas que se importam com música, uma cena local, uma base de fãs em outro lugar. Presença em shows (convites e público) e ouvintes mensais no streaming são o termômetro (possíveis métricas de acompanhamento). Mas entrega e crescimento são consequência, não pré-condição.',
     pret2:
       'A vida adulta tem agenda própria. Por isso a energia da banda precisa ser gasta de forma <strong>estratégica</strong>: conteúdo que valha, eventos com retorno, público que consome música de verdade. Festivais, Bolacha Discos, espaços afins.',
     pret3:
@@ -68,7 +68,7 @@ window.OCN9_I18N = {
     flow2t: 'Depois, de 4 em 4 músicas',
     flow2d: 'Cada bloco percorre o mesmo caminho, na ordem dos EPs:',
     flow2l:
-      '<li><strong>Captação final</strong> — vozes e efeitos por cima da base</li><li><strong>Mixagem e masterização</strong></li><li><strong>Audiovisual das 4</strong> — visualiser, lyric video, clipe ou capa</li><li><strong>Registro e distribuição</strong> — ISRC e envio à distribuidora</li><li><strong>Lançamento</strong> — com pitch no Spotify de 1 faixa de trabalho</li>',
+      '<li><strong>Captação final</strong> — vozes e efeitos por cima da base</li><li><strong>Mixagem e masterização</strong></li><li><strong>Audiovisual das 4</strong> — capa + pelo menos um vídeo: visualiser, lyric video ou clipe</li><li><strong>Registro e distribuição</strong> — ISRC e envio à distribuidora</li><li><strong>Lançamento</strong> — com pitch no Spotify de 1 faixa de trabalho</li>',
     flow3t: 'Tudo em paralelo',
     flow3d:
       'Ninguém espera ninguém. Enquanto um bloco é finalizado, o próximo já está em fila e a banda não para.',
@@ -206,7 +206,7 @@ window.OCN9_I18N = {
     mkFor: 'Line-up',
     slPret: 'Ambition',
     pret1:
-      'To be <strong>socially and culturally relevant</strong> to a group of people who care about music — a local scene, say, or a fanbase somewhere else. A fair measure might be people showing up at gigs, and monthly listeners on streaming. But output and growth are a consequence, not a condition for existing.',
+      'To be <strong>socially and culturally relevant</strong> to a group of people who care about music — a local scene, say, or a fanbase somewhere else. A fair measure might be presence at gigs — invitations and turnout — and monthly listeners on streaming (possible metrics to track). But output and growth are a consequence, not a condition for existing.',
     pret2:
       'Adult life keeps its own schedule. So the band’s energy has to be spent <strong>strategically</strong>: content worth making, gigs that give something back, audiences that actually consume music. Festivals, Bolacha Discos, rooms of that kind.',
     pret3:
@@ -220,7 +220,7 @@ window.OCN9_I18N = {
     flow2t: 'Then, four songs at a time',
     flow2d: 'Each block runs the same path, in EP order:',
     flow2l:
-      '<li><strong>Final tracking</strong> — vocals and effects over the base</li><li><strong>Mixing and mastering</strong></li><li><strong>Visuals for all four</strong> — visualiser, lyric video, music video or cover art</li><li><strong>Registration and distribution</strong> — ISRC and submission to the distributor</li><li><strong>Release</strong> — with a Spotify pitch on one focus track</li>',
+      '<li><strong>Final tracking</strong> — vocals and effects over the base</li><li><strong>Mixing and mastering</strong></li><li><strong>Visuals for all four</strong> — cover art + at least one video: visualiser, lyric video or music video</li><li><strong>Registration and distribution</strong> — ISRC and submission to the distributor</li><li><strong>Release</strong> — with a Spotify pitch on one focus track</li>',
     flow3t: 'All in parallel',
     flow3d:
       'Nobody waits for anybody. While one block is being finished, the next is already queued and the band keeps playing.',
