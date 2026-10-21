@@ -1238,6 +1238,16 @@
   border-color: var(--accent-border);
 }
 
+/* A imagem inteira é o botão de ampliar. */
+.merch-item__zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
 .merch-item img {
   width: 100%;
   display: block;
@@ -1438,6 +1448,20 @@
 .modal__text strong {
   font-weight: var(--fw-medium);
   color: var(--text-primary);
+}
+
+/* Variante de imagem: mais larga, sem respiro, a foto inteira
+   cabendo na altura da tela. */
+.modal--media { width: min(1200px, 100%); }
+.modal--media .modal__body { padding: 0; overflow: hidden; }
+
+.modal__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(86vh - 60px);
+  object-fit: contain;
+  background: var(--brand-ground);
 }
 
 .modal__image {

@@ -278,12 +278,14 @@
   var modalTitle = document.getElementById('modalTitle');
   var modalBody = document.getElementById('modalBody');
   var modalClose = document.getElementById('modalClose');
+  var modalBox = overlay ? overlay.querySelector('.modal') : null;
   var lastFocused = null;
 
   var FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
   function openModal(title, html, imageSrc) {
     if (!overlay) return;
+    modalBox.classList.remove('modal--media');
     modalTitle.textContent = title;
     modalBody.innerHTML = html + (imageSrc
       ? '<img class="modal__image" src="' + imageSrc + '" alt="" onerror="this.remove()">'
@@ -351,6 +353,23 @@
       var title = card.querySelector('.track__title').textContent.trim();
       var bpm = card.querySelector('.track__bpm');
       openModal(bpm ? title + '  ·  ' + bpm.textContent.trim() : title, body.innerHTML, null);
+    });
+  });
+
+  /* --- Merch: clicar abre a imagem grande, com a legenda de título.
+         A legenda é lida na hora do clique, já no idioma ativo. --- */
+  document.querySelectorAll('[data-zoom]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var img = btn.querySelector('img');
+      var caption = btn.closest('figure').querySelector('figcaption');
+      if (!img) return;
+      openModal(caption ? caption.textContent.trim() : '', '', null);
+      var big = document.createElement('img');
+      big.className = 'modal__photo';
+      big.src = img.getAttribute('src');
+      big.alt = img.alt;
+      modalBody.appendChild(big);
+      modalBox.classList.add('modal--media');
     });
   });
 
