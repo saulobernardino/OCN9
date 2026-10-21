@@ -24,6 +24,7 @@ window.OCN9_I18N = {
     /* --- pré-produção --- */
     slPre: 'Pré-produção',
     preprodNote: '12 faixas · divisão em EPs definida após a sessão',
+    tuning: '<strong>Afinação</strong> Meio tom abaixo, padrão em Mi bemol: D# G# C# F# A# D#',
     dlMp3: 'Música (.mp3)',
     dlStems: 'Faixas separadas (.zip)',
     lyr: 'Letra',
@@ -106,23 +107,25 @@ window.OCN9_I18N = {
     slLogo: 'Logotipo',
     logoIntro:
       'A placa com o nome. É a assinatura padrão da marca — use quando o público ainda não tem o repertório visual para reconhecer só o símbolo: capa de release, cabeçalho, cartaz, ficha técnica.',
-    logoFiles: 'Arquivos: <code>logo-1color.svg</code> · <code>logo-negative.svg</code>',
+    logoFiles: 'Arquivos: <code>logo-ink.svg</code> · <code>logo-cream.svg</code>',
 
     slMerch: 'Merch',
     merchIntro:
       'Renders de IA, pré-visualização rápida da direção, não é arte final de produção.',
-    merchTee: 'Camiseta — logotipo na frente, símbolo nas costas',
-    merchTeeRed: 'Camiseta — variação vermelha',
-    merchK7: 'Fita K7 — sobre o amplificador',
+    merchTeeWhite: 'Camiseta — creme, duas tintas',
+    merchTeeBlack: 'Camiseta — preta, tinta creme',
+    merchTeeRed: 'Camiseta — vermelha, tinta creme',
+    merchCan: 'Lata — o símbolo como rótulo',
+    merchK7: 'Fita K7 — fita adesiva escrita à mão',
     merchBox: 'Caixinha de palhetas — logotipo',
 
     slSymbol: 'Símbolo',
     symbolIntro:
       'A lata. Funciona sozinha onde o nome já está estabelecido ou já aparece perto: avatar de rede social, selo, bumbo, adesivo, marca d\'água de vídeo. Nunca é a primeira apresentação da marca a um público novo.',
     symbolFiles:
-      'Arquivos: <code>symbol-1color.svg</code> · <code>symbol-2colors.svg</code> · <code>symbol-negative.svg</code>',
+      'Arquivos: <code>symbol-can-2colors.svg</code> · <code>symbol-can-negative.svg</code>',
     symbolRule:
-      'Sobre fundo escuro ou colorido, use sempre o <strong>negativo</strong>. A versão de duas cores só existe sobre branco — o vermelho do No. 9 não separa do preto nem do azul.',
+      'Sobre fundo escuro ou colorido, use sempre o <strong>negativo</strong>, em creme. A versão de duas cores só existe sobre creme — o vermelho do nome não separa do preto nem do azul.',
 
     slCoex: 'Coexistência',
     coexIntro:
@@ -137,15 +140,15 @@ window.OCN9_I18N = {
     slPal: 'Paleta',
     palIntro:
       'Quatro cores fechadas. São elas que vão para peça impressa, capa e vídeo — sem variação, sem tint, sem gradiente.',
-    palWhiteUse: 'Fundo padrão. Placa do logotipo e símbolo negativo sobre fundo escuro ou colorido.',
+    palCreamUse: 'Papel e fundo claro. Placa do logotipo e símbolo negativo sobre fundo escuro ou colorido.',
     palBlackUse: 'Tinta. Texto, traço do símbolo e fundo alternativo de peça.',
     palBlueUse: 'Primária. Ação, navegação, rótulo de seção e fundo de peça.',
-    palRedUse: 'Acento. O No. 9, marcadores e destaque pontual. Nunca em bloco de texto.',
+    palRedUse: 'Acento. O nome na lata em duas cores, marcadores e destaque pontual. Nunca em bloco de texto.',
     slRamp: 'Escalas derivadas — só para tela',
     rampIntro:
       'Extensões geradas a partir do azul e do vermelho, mais uma escala neutra fria. Existem para dar hierarquia, estado e contraste na interface, onde quatro cores não bastam. <strong>Não são cores de marca</strong> e não entram em peça impressa nem em capa.',
-    rampBlue: 'Azul — derivado de #175A70',
-    rampRed: 'Vermelho — derivado de #B22425',
+    rampBlue: 'Azul petróleo — derivado de #0A6366',
+    rampRed: 'Vermelho — derivado de #B8352C',
     rampGray: 'Neutro — cinzas frios',
     a11yNote:
       'Sobre fundo escuro, o azul e o vermelho da marca não alcançam o contraste mínimo de leitura (WCAG AA). No tema escuro a interface usa os degraus 300 dessas escalas para texto e ícone — a cor de marca continua reservada para superfície e peça.',
@@ -178,6 +181,7 @@ window.OCN9_I18N = {
 
     slPre: 'Pre-production',
     preprodNote: '12 tracks · EP split decided after the session',
+    tuning: '<strong>Tuning</strong> Half a step down, E&#9837; standard: D# G# C# F# A# D#',
     dlMp3: 'Song (.mp3)',
     dlStems: 'Stems (.zip)',
     lyr: 'Lyrics',
@@ -255,23 +259,25 @@ window.OCN9_I18N = {
     slLogo: 'Logo',
     logoIntro:
       'The plate with the name. This is the brand’s default signature — use it wherever the audience does not yet have the visual vocabulary to recognise the symbol alone: release covers, headers, posters, credits.',
-    logoFiles: 'Files: <code>logo-1color.svg</code> · <code>logo-negative.svg</code>',
+    logoFiles: 'Files: <code>logo-ink.svg</code> · <code>logo-cream.svg</code>',
 
     slMerch: 'Merch',
     merchIntro:
       'AI-generated concept renders, a quick preview of the direction, not final production art.',
-    merchTee: 'Tee — logo on the chest, symbol on the back',
-    merchTeeRed: 'Tee — red colourway',
-    merchK7: 'Cassette — on the amp rig',
+    merchTeeWhite: 'Tee — cream, two inks',
+    merchTeeBlack: 'Tee — black, cream ink',
+    merchTeeRed: 'Tee — red, cream ink',
+    merchCan: 'Can — the symbol as a label',
+    merchK7: 'Cassette — hand-lettered tape',
     merchBox: 'Pick tin — logo',
 
     slSymbol: 'Symbol',
     symbolIntro:
       'The can. It works alone where the name is already established or already sits nearby: social avatars, seals, bass drum, stickers, video watermark. It is never the brand’s first introduction to a new audience.',
     symbolFiles:
-      'Files: <code>symbol-1color.svg</code> · <code>symbol-2colors.svg</code> · <code>symbol-negative.svg</code>',
+      'Files: <code>symbol-can-2colors.svg</code> · <code>symbol-can-negative.svg</code>',
     symbolRule:
-      'On a dark or coloured ground, always use the <strong>negative</strong>. The two-colour version exists on white only — the red of the No. 9 does not separate from black or from blue.',
+      'On a dark or coloured ground, always use the <strong>negative</strong>, in cream. The two-colour version exists on cream only — the red of the name does not separate from black or from blue.',
 
     slCoex: 'Coexistence',
     coexIntro:
@@ -285,15 +291,15 @@ window.OCN9_I18N = {
     slPal: 'Palette',
     palIntro:
       'Four settled colours. These are what go to print, covers and video — no variation, no tints, no gradients.',
-    palWhiteUse: 'Default ground. Logo plate and negative symbol on a dark or coloured ground.',
+    palCreamUse: 'Paper and light ground. Logo plate and negative symbol on a dark or coloured ground.',
     palBlackUse: 'Ink. Type, symbol linework and alternative ground.',
     palBlueUse: 'Primary. Action, navigation, section labels and coloured grounds.',
-    palRedUse: 'Accent. The No. 9, markers and single points of emphasis. Never a block of text.',
+    palRedUse: 'Accent. The name on the two-colour can, markers and single points of emphasis. Never a block of text.',
     slRamp: 'Derived scales — screen only',
     rampIntro:
       'Extensions generated from the blue and the red, plus a cool neutral scale. They exist to give hierarchy, state and contrast in the interface, where four colours are not enough. They are <strong>not brand colours</strong> and never go to print or onto a cover.',
-    rampBlue: 'Blue — derived from #175A70',
-    rampRed: 'Red — derived from #B22425',
+    rampBlue: 'Petrol blue — derived from #0A6366',
+    rampRed: 'Red — derived from #B8352C',
     rampGray: 'Neutral — cool greys',
     a11yNote:
       'On a dark ground, the brand blue and red fall short of the minimum reading contrast (WCAG AA). In dark theme the interface uses the 300 step of those scales for type and icons — the brand colour stays reserved for surfaces and printed pieces.',

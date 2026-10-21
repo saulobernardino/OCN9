@@ -13,10 +13,10 @@
    semânticos da seção 4, que trocam sozinhos entre temas.
    ------------------------------------------------------------ */
 :root {
-  --brand-white: #ffffff;
-  --brand-black: #060606;
-  --brand-blue:  #175a70;
-  --brand-red:   #b22425;
+  --brand-cream: #f4f2ee;
+  --brand-black: #11171a;
+  --brand-blue:  #0a6366;   /* azul petróleo */
+  --brand-red:   #b8352c;
 }
 
 /* ------------------------------------------------------------
@@ -26,39 +26,51 @@
    não são cores de marca e não entram em peça impressa.
    ------------------------------------------------------------ */
 :root {
-  /* Azul — derivado de #175A70 (H 194°) */
-  --blue-100: #e8f1f4;
-  --blue-200: #c4dbe3;
-  --blue-300: #8fbcca;
-  --blue-400: #4e93a8;
-  --blue-500: #175a70;   /* = --brand-blue */
-  --blue-600: #12495b;
-  --blue-700: #0e3846;
-  --blue-800: #0a2833;
+  /* Azul petróleo — derivado de #0A6366. Cada degrau mantém a
+     luminosidade OKLab do degrau equivalente da rampa anterior,
+     então os contrastes anotados abaixo seguem valendo. */
+  --blue-100: #e8f2f2;
+  --blue-200: #c3dcdd;
+  --blue-300: #8cbec0;
+  --blue-400: #479699;
+  --blue-500: #0a6366;   /* = --brand-blue */
+  --blue-600: #014c4f;
+  --blue-700: #043b3c;
+  --blue-800: #042a2b;
 
-  /* Vermelho — derivado de #B22425 (H 360°) */
-  --red-100: #fbeaea;
-  --red-200: #f2c6c6;
-  --red-300: #e39696;
-  --red-400: #cf5152;
-  --red-500: #b22425;    /* = --brand-red */
-  --red-600: #931d1e;
-  --red-700: #711617;
-  --red-800: #4e0f10;
+  /* Vermelho — derivado de #B8352C, mesmo método */
+  --red-100: #faebe8;
+  --red-200: #f1c7c1;
+  --red-300: #e1998e;
+  --red-400: #cc564a;
+  --red-500: #b8352c;    /* = --brand-red */
+  --red-600: #90231d;
+  --red-700: #6f1b15;
+  --red-800: #4c120e;
 
-  /* Neutros — cinzas levemente frios, para casar com o azul */
+  /* Neutros — cinzas levemente frios, no matiz do preto da marca.
+     O 800 e o 900 subiram: o preto novo é mais claro que o antigo
+     e o 900 anterior ficava colado nele, sem separar card de página. */
   --gray-000: #ffffff;
   --gray-050: #f7f8f9;
   --gray-100: #eef0f2;
-  --gray-200: #e2e5e8;
-  --gray-300: #cbd0d5;
-  --gray-400: #a2aab1;
-  --gray-500: #78818a;
-  --gray-600: #565f68;
-  --gray-700: #3b434a;
-  --gray-800: #23292e;
-  --gray-900: #14181b;
-  --gray-950: #060606;   /* = --brand-black */
+  --gray-200: #e1e5e7;
+  --gray-300: #cad1d4;
+  --gray-400: #a1abb0;
+  --gray-500: #768288;
+  --gray-600: #546066;
+  --gray-700: #394449;
+  --gray-800: #2a3235;
+  --gray-900: #1c2326;
+  --gray-950: #11171a;   /* = --brand-black */
+
+  /* Creme — fundos e filetes do tema claro. Mesmo matiz do creme
+     da marca, quase sem croma: o texto continua nos cinzas frios. */
+  --cream-050: #f8f6f3;   /* card: papel mais claro sobre a página */
+  --cream-100: #f4f2ee;   /* = --brand-cream */
+  --cream-200: #e9e8e4;
+  --cream-300: #dfdeda;
+  --cream-400: #d2d1cd;
 }
 
 /* ------------------------------------------------------------
@@ -149,6 +161,19 @@
 }
 
 /* ------------------------------------------------------------
+   3b. SUPERFÍCIE DE MARCA E TEXTURA
+   Não trocam com o tema: o hero é sempre noite, preto e creme,
+   como a peça impressa. A retícula imita o ponto da serigrafia.
+   ------------------------------------------------------------ */
+:root {
+  --brand-ground: var(--brand-black);
+  --brand-ink: var(--brand-cream);
+  /* Ponto minúsculo e discreto: textura que se sente mais do que se vê. */
+  --texture-dot-size: 2px;
+  --texture-dot: radial-gradient(rgba(17, 23, 26, 0.32) 0.45px, transparent 0.75px);
+}
+
+/* ------------------------------------------------------------
    4. TOKENS SEMÂNTICOS — TEMA CLARO (padrão)
    Estes são os únicos tokens de cor que componentes devem usar.
    Contraste verificado em WCAG 2.1 AA (4.5:1 texto normal,
@@ -159,57 +184,57 @@
   color-scheme: light;
 
   /* Superfícies */
-  --surface-page: var(--gray-000);
-  --surface-raised: var(--gray-050);   /* cards sobre a página */
-  --surface-sunken: var(--gray-100);   /* poços, headers de tabela */
-  --surface-hover: var(--gray-100);
+  --surface-page: var(--cream-100);
+  --surface-raised: var(--cream-050);  /* cards sobre a página */
+  --surface-sunken: var(--cream-200);  /* poços, headers de tabela */
+  --surface-hover: var(--cream-200);
   --surface-inverse: var(--gray-950);
 
   /* Texto — sobre --surface-page */
-  --text-primary: var(--gray-950);     /* 20.2:1 */
-  --text-secondary: var(--gray-700);   /*  9.7:1 */
-  --text-tertiary: var(--gray-600);    /*  6.6:1 — mínimo para corpo */
-  --text-muted: var(--gray-500);       /*  4.6:1 — labels curtos */
-  --text-inverse: var(--gray-000);
-  --text-on-accent: var(--gray-000);
+  --text-primary: var(--gray-950);     /* 16.2:1 sobre creme */
+  --text-secondary: var(--gray-700);   /*  9.0:1 */
+  --text-tertiary: var(--gray-600);    /*  5.8:1 — mínimo para corpo */
+  --text-muted: var(--gray-500);       /*  3.5:1 — só texto grande ou label curto */
+  --text-inverse: var(--cream-100);
+  --text-on-accent: var(--cream-100);
 
   /* Bordas */
-  --border-default: var(--gray-200);
-  --border-strong: var(--gray-300);
-  --border-subtle: var(--gray-100);
+  --border-default: var(--cream-300);
+  --border-strong: var(--cream-400);
+  --border-subtle: var(--cream-200);
   --border-inverse: var(--gray-800);
 
   /* Primária (azul) — ação, navegação ativa, labels de seção */
-  --accent: var(--blue-500);           /*  7.4:1 sobre branco */
+  --accent: var(--blue-500);           /*  6.3:1 com creme por cima */
   --accent-hover: var(--blue-600);
   --accent-active: var(--blue-700);
   --accent-text: var(--blue-600);      /* azul para texto corrido */
   --accent-border: var(--blue-300);
   --accent-surface: var(--blue-100);   /* fundo de chip/pill */
-  --accent-contrast: var(--gray-000);  /* texto sobre --accent */
+  --accent-contrast: var(--cream-100); /* texto sobre --accent */
 
   /* Secundária (vermelho) — destaque, marcador, estado crítico */
-  --highlight: var(--red-500);         /*  6.3:1 sobre branco */
+  --highlight: var(--red-500);         /*  5.2:1 com creme por cima */
   --highlight-hover: var(--red-600);
   --highlight-text: var(--red-600);
   --highlight-border: var(--red-300);
   --highlight-surface: var(--red-100);
-  --highlight-contrast: var(--gray-000);
+  --highlight-contrast: var(--cream-100);
 
   /* Foco — sempre visível, nunca removido */
   --focus-ring: var(--blue-500);
   --focus-ring-offset: var(--surface-page);
 
   /* Sombras — quase inexistentes; a página é definida por linhas */
-  --shadow-sm: 0 1px 2px rgba(6, 6, 6, 0.06);
-  --shadow-md: 0 4px 16px rgba(6, 6, 6, 0.08);
-  --shadow-lg: 0 16px 48px rgba(6, 6, 6, 0.14);
-  --scrim: rgba(6, 6, 6, 0.62);
+  --shadow-sm: 0 1px 2px rgba(17, 23, 26, 0.06);
+  --shadow-md: 0 4px 16px rgba(17, 23, 26, 0.08);
+  --shadow-lg: 0 16px 48px rgba(17, 23, 26, 0.14);
+  --scrim: rgba(17, 23, 26, 0.62);
 }
 
 /* ------------------------------------------------------------
    5. TOKENS SEMÂNTICOS — TEMA ESCURO
-   Sobre o preto real da marca (#060606), não sobre um cinza.
+   Sobre o preto real da marca (#11171A), não sobre um cinza.
    Azul e vermelho são clareados: os valores de marca não passam
    em contraste sobre fundo escuro e não devem ser usados como
    texto aqui.
@@ -219,12 +244,12 @@
 
   --surface-page: var(--brand-black);
   --surface-raised: var(--gray-900);
-  --surface-sunken: #0d0f11;
+  --surface-sunken: #0b1013;
   --surface-hover: var(--gray-800);
-  --surface-inverse: var(--gray-000);
+  --surface-inverse: var(--cream-100);
 
-  --text-primary: var(--gray-000);      /* 20.2:1 */
-  --text-secondary: var(--gray-300);    /* 12.4:1 */
+  --text-primary: var(--cream-100);     /* 16.2:1 — creme, não branco: é a tinta da marca */
+  --text-secondary: var(--gray-300);    /* 11.7:1 */
   --text-tertiary: var(--gray-400);     /*  7.7:1 */
   --text-muted: var(--gray-500);        /*  4.6:1 */
   --text-inverse: var(--gray-950);
@@ -235,15 +260,18 @@
   --border-subtle: var(--gray-900);
   --border-inverse: var(--gray-200);
 
-  --accent: var(--blue-300);            /*  8.4:1 sobre #060606 */
-  --accent-hover: var(--blue-200);
-  --accent-active: var(--blue-100);
+  /* Preenchimento no 400: o 300 virava um verde-água pastel que não
+     lembra a marca. Texto escuro por cima, 5.2:1. O texto em azul
+     segue no 300 (8.8:1 sobre #11171A). */
+  --accent: var(--blue-400);
+  --accent-hover: var(--blue-300);
+  --accent-active: var(--blue-200);
   --accent-text: var(--blue-300);
   --accent-border: var(--blue-600);
   --accent-surface: var(--blue-800);
   --accent-contrast: var(--gray-950);
 
-  --highlight: var(--red-300);          /*  7.0:1 sobre #060606 */
+  --highlight: var(--red-300);          /*  7.9:1 sobre #11171A */
   --highlight-hover: var(--red-200);
   --highlight-text: var(--red-300);
   --highlight-border: var(--red-600);
@@ -268,11 +296,11 @@
 
     --surface-page: var(--brand-black);
     --surface-raised: var(--gray-900);
-    --surface-sunken: #0d0f11;
+    --surface-sunken: #0b1013;
     --surface-hover: var(--gray-800);
-    --surface-inverse: var(--gray-000);
+    --surface-inverse: var(--cream-100);
 
-    --text-primary: var(--gray-000);
+    --text-primary: var(--cream-100);
     --text-secondary: var(--gray-300);
     --text-tertiary: var(--gray-400);
     --text-muted: var(--gray-500);
@@ -284,9 +312,9 @@
     --border-subtle: var(--gray-900);
     --border-inverse: var(--gray-200);
 
-    --accent: var(--blue-300);
-    --accent-hover: var(--blue-200);
-    --accent-active: var(--blue-100);
+    --accent: var(--blue-400);
+    --accent-hover: var(--blue-300);
+    --accent-active: var(--blue-200);
     --accent-text: var(--blue-300);
     --accent-border: var(--blue-600);
     --accent-surface: var(--blue-800);
