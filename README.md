@@ -17,9 +17,11 @@ OCN9/
 │  └─ utilities.css      exceções de uma propriedade — sempre por último
 ├─ js/
 │  ├─ i18n.js            dicionário PT/EN, único lugar com texto de interface
-│  └─ app.js             tema, abas, idioma, moodboard, modal, player
+│  ├─ app.js             tema, abas, idioma, moodboard, modal, player
+│  ├─ mixer.js           transporte e controles das trilhas
+│  └─ mix-tracks.js      arquivos e nomes dos canais por faixa
 ├─ assets/
-│  ├─ audio/             pré-produção (.mp3) e stems (.zip)
+│  ├─ audio/             pré-produção (.mp3), stems (.zip) e MP3 soltos em stems/
 │  ├─ covers/            capas dos EPs — vazia; a página cai no placeholder
 │  ├─ docs/              letras e BPM de origem (.rtf)
 │  ├─ help/              imagens dos modais de contexto
@@ -105,10 +107,9 @@ depois que o dicionário passa.
 
 ## Player
 
-Existe **um** `<audio>` na página, escondido, compartilhado pelos quatro cards
-com áudio e pela fila. Isso resolve de graça o problema que quatro
+Existe **um** `<audio>` na página, escondido, compartilhado pelos cards com áudio e pela fila. Isso resolve de graça o problema que quatro
 `<audio controls>` tinham: dois nunca tocam juntos porque só existe um
-elemento. Também deixou de baixar os quatro mp3 no load — nada de áudio sai do
+elemento. Também deixou de baixar os MP3 no load — nada de áudio sai do
 servidor antes de alguém apertar tocar.
 
 A barra é **fixa no rodapé e só aparece quando algo toca**. Não é sidebar de
@@ -130,6 +131,18 @@ entra na fila quando tem `data-track` e `data-src`; sem isso ele é só um card.
 
 `render()` é o único lugar que desenha estado — barra, card e fila saem sempre
 da mesma leitura, então não têm como divergir.
+
+## Mixer de trilhas
+
+O botão **Abrir mix** aparece no card e na barra do player para músicas com
+trilhas em `js/mix-tracks.js`. Ao abrir, o player estéreo pausa e o mixer
+carrega só os MP3 dessa música por HTTP. Cada canal tem seu próprio ganho e
+todas as trilhas seguem o mesmo relógio do Web Audio. Fechar encerra a
+reprodução e libera os buffers.
+
+Para adicionar um mix, extraia os MP3 do ZIP em
+`assets/audio/stems/<data-slug>/`, liste os nomes no manifesto e inclua o
+botão no card. Exporte as trilhas com a mesma origem de tempo.
 
 ## Design system
 

@@ -439,6 +439,7 @@
     var queue = document.getElementById('playerQueue');
     var listEl = document.getElementById('playerList');
     var queueBtn = dock.querySelector('[data-p="queue"]');
+    var mixBtn = dock.querySelector('[data-p="mix"]');
     var seqBtn = dock.querySelector('[data-p="seq"]');
     var mainBtn = dock.querySelector('[data-p="toggle"]');
     var playAllBtn = document.getElementById('playAll');
@@ -466,6 +467,17 @@
       if (!isFinite(seconds) || seconds < 0) return '—:—';
       var total = Math.floor(seconds);
       return Math.floor(total / 60) + ':' + String(total % 60).padStart(2, '0');
+    }
+
+    var mixDialog = document.getElementById('mixDialog');
+    var mixer = window.createOCN9Mixer && window.createOCN9Mixer(mixDialog, t, clock, setIcons);
+
+    function openMix(card, trigger) {
+      if (!mixer || !card || !mixer.has(card.dataset.slug)) return;
+      audio.pause();
+      setQueue(false);
+      render();
+      mixer.open(card.dataset.slug, nameOf(card), trigger);
     }
 
     function setIcons(scope, playing) {
@@ -501,6 +513,7 @@
         mainBtn.setAttribute('aria-label', playing ? t('pPause', 'Pause') : t('pPlay', 'Play'));
       }
       if (seqBtn) seqBtn.setAttribute('aria-pressed', String(sequential));
+      if (mixBtn) mixBtn.hidden = !mixer || index < 0 || !mixer.has(cards[index].dataset.slug);
       titleEl.textContent = index >= 0 ? nameOf(cards[index]) : '—';
     }
 
@@ -550,6 +563,7 @@
     /* play() pode ser recusado (política de autoplay). Se for, o
        estado tem de voltar a "pausado" em vez de mentir. */
     function start() {
+      if (mixer && mixDialog.open) return;
       openDock();
       var attempt = audio.play();
       if (attempt && attempt.catch) attempt.catch(function () {});
@@ -563,7 +577,7 @@
     }
 
     function step(delta) {
-      if (index < 0) return;
+      if (index < 0 || (mixer && mixDialog.open)) return;
       /* Convenção de tocador: "anterior" no meio da faixa volta ao
          começo dela, e só na cabeça é que pula para a de trás. */
       if (delta < 0 && audio.currentTime > 3) {
@@ -627,6 +641,11 @@
 
     /* ---- gatilhos ---- */
     cards.forEach(function (card, i) {
+      var cardMixBtn = card.querySelector('[data-open-mix]');
+      if (cardMixBtn && mixer && mixer.has(card.dataset.slug)) {
+        cardMixBtn.hidden = false;
+        cardMixBtn.addEventListener('click', function () { openMix(card, cardMixBtn); });
+      }
       var btn = card.querySelector('[data-play]');
       if (!btn) return;
       btn.addEventListener('click', function () {
@@ -657,6 +676,7 @@
       else if (action === 'prev') step(-1);
       else if (action === 'close') closeDock();
       else if (action === 'queue') setQueue(queue.hidden);
+      else if (action === 'mix') openMix(cards[index], btn);
       else if (action === 'seq') {
         sequential = !sequential;
         render();
@@ -692,7 +712,7 @@
     audio.addEventListener('pause', render);
 
     audio.addEventListener('ended', function () {
-      if (sequential && index < cards.length - 1) {
+      if (sequential && index < cards.length - 1 && !(mixer && mixDialog.open)) {
         load(index + 1);
         start();
       } else {
