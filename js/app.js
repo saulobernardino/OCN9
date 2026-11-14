@@ -501,7 +501,7 @@
           btn.setAttribute('aria-pressed', String(cardPlaying));
           setIcons(btn, cardPlaying);
         }
-        if (label) label.textContent = cardPlaying ? t('pause', 'Pause') : t('play', 'Play');
+        if (label) label.textContent = cardPlaying ? t('pause', 'Pause') : 'Play';
       });
 
       listEl.querySelectorAll('.player__item').forEach(function (item, i) {

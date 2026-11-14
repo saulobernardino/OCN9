@@ -579,14 +579,23 @@
 }
 
 .track__actions .btn {
+  flex-direction: column;
+  justify-content: center;
   gap: var(--sp-1);
-  min-height: var(--sp-10);
-  padding-inline: var(--sp-1);
+  width: calc(var(--sp-8) + var(--sp-6));
+  aspect-ratio: 1;
+  padding: var(--sp-1);
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-xs);
   letter-spacing: var(--ls-normal);
+  text-transform: none;
   white-space: nowrap;
 }
 
-.track__actions .btn--mix svg { display: none; }
+.track__actions .btn svg {
+  width: var(--sp-5);
+  height: var(--sp-5);
+}
 
 .track__actions .btn--play {
   background: var(--accent-surface);
