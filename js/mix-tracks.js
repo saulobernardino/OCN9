@@ -54,6 +54,33 @@ window.OCN9_MIX_TRACKS = {
     ["Vocal_1.mp3", "Vocal"],
     ["Vocal End_1.mp3", "Vocal End"]
   ],
+  "faces": [
+    ["Faces - Playback_1.mp3", "Playback"],
+    ["Thunderbird_1.mp3", "Thunderbird"],
+    ["Gretsch Vi&Sa.mp3", "Gretsch Vi&Sa"],
+    ["Gretsch Vi&Sa_1.mp3", "Gretsch Vi&Sa 1"],
+    ["Gretsch Vi&Sa_3.mp3", "Gretsch Vi&Sa 3"],
+    ["Saulo Voz - L_1.mp3", "Saulo Voz L"],
+    ["Saulo Voz - R_1.mp3", "Saulo Voz R"],
+    ["Saulo Voz - Chorus_1.mp3", "Saulo Voz Chorus"],
+    ["VOZ UH_1.mp3", "Voz UH"]
+  ],
+  "caracaras": [
+    ["kick.mp3", "Kick"],
+    ["snare.mp3", "Snare"],
+    ["hit-hat.mp3", "Hi-hat"],
+    ["gretsch.mp3", "Gretsch"],
+    ["strato.mp3", "Strato"],
+    ["efx.mp3", "EFX"],
+    ["vocal.mp3", "Vocal"]
+  ],
+  "so-sad": [
+    ["Liverpool_1.mp3", "Liverpool"],
+    ["Bass_1.mp3", "Bass"],
+    ["Vocal Center_1.mp3", "Vocal Center"],
+    ["Vocal L_1.mp3", "Vocal L"],
+    ["Vocal R_1.mp3", "Vocal R"]
+  ],
   somos: [
     ["kick.mp3", "Kick"],
     ["snare.mp3", "Snare"],
