@@ -26,7 +26,7 @@
 .text-accent { color: var(--accent-text) !important; }
 .text-highlight { color: var(--highlight-text) !important; }
 
-.text-mono { font-family: var(--font-mono) !important; }
+.text-body { font-family: var(--font-body) !important; }
 .text-display { font-family: var(--font-display) !important; }
 
 .text-2xs { font-size: var(--fs-2xs) !important; }

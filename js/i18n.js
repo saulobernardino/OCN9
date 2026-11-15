@@ -13,6 +13,13 @@ window.OCN9_I18N = {
     navCon: 'Conceito e plano',
     navVis: 'Identidade visual',
     navSon: 'Identidade sonora',
+    themeLabel: 'Tema escuro',
+    planRecord: 'Gravar ao vivo',
+    planRecordText: 'Baixo, bateria e guitarra. Doze faixas em uma sessão.',
+    planRelease: 'Lançar em 2027',
+    planReleaseText: 'Três EPs de quatro faixas. Fechar mix, master e visual de um EP por vez.',
+    planStage: 'Levar ao palco',
+    planStageText: 'Tocar o repertório autoral ao vivo e reunir as doze faixas no streaming e em fita K7.',
     footerMeta: 'projeto · v0.3 · 2026–2027',
 
     /* --- topo --- */
@@ -165,9 +172,7 @@ window.OCN9_I18N = {
       'Sobre fundo escuro, o azul e o vermelho da marca não alcançam o contraste mínimo de leitura (WCAG AA). No tema escuro a interface usa os degraus 300 dessas escalas para texto e ícone — a cor de marca continua reservada para superfície e peça.',
 
     slTipo: 'Tipografia',
-    tipo1: 'Display · logotipo · títulos — fontshare.com',
-    tipo2: 'Geist Mono — texto e rótulos',
-    tipo2meta: 'Corpo · interface · metadados — Google Fonts',
+    tipoUiWeights: 'Bold nos títulos · Medium nos textos',
 
     slMood: 'Moodboard visual',
     moodDesc:
@@ -183,6 +188,13 @@ window.OCN9_I18N = {
     navCon: 'Concept & plan',
     navVis: 'Visual identity',
     navSon: 'Sonic identity',
+    themeLabel: 'Dark mode',
+    planRecord: 'Record live',
+    planRecordText: 'Bass, drums and guitar. Twelve tracks in one session.',
+    planRelease: 'Release in 2027',
+    planReleaseText: 'Three four-track EPs. Finish the mix, master and visuals one EP at a time.',
+    planStage: 'Take it to the stage',
+    planStageText: 'Play the original set live. Bring all twelve tracks together on streaming and cassette.',
     footerMeta: 'project · v0.3 · 2026–2027',
 
     tagline:
@@ -327,9 +339,7 @@ window.OCN9_I18N = {
       'On a dark ground, the brand blue and red fall short of the minimum reading contrast (WCAG AA). In dark theme the interface uses the 300 step of those scales for type and icons — the brand colour stays reserved for surfaces and printed pieces.',
 
     slTipo: 'Typography',
-    tipo1: 'Display · logo · headings — fontshare.com',
-    tipo2: 'Geist Mono — text and labels',
-    tipo2meta: 'Body · interface · metadata — Google Fonts',
+    tipoUiWeights: 'Bold for headings · Medium for text',
 
     slMood: 'Visual moodboard',
     moodDesc:

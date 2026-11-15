@@ -6,6 +6,22 @@
    espaçamento, ms de transição). Sempre referencie um token.
    ============================================================ */
 
+@font-face {
+  font-family: 'Dx Lactos Vol. 02';
+  src: url('../assets/fonts/dx-lactos-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DT Getai Grotesk Display';
+  src: url('../assets/fonts/dt-getai-grotesk-display-black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ------------------------------------------------------------
    1. PRIMITIVOS DE MARCA
    Os quatro valores fechados da identidade. Imutáveis.
@@ -79,8 +95,21 @@
    ------------------------------------------------------------ */
 :root {
   /* Famílias */
-  --font-display: 'Cabinet Grotesk', 'Helvetica Neue', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Courier New', monospace;
+  --font-body: 'Dx Lactos Vol. 02', system-ui, sans-serif;
+  --font-display: var(--font-body);
+  --font-wordmark: 'DT Getai Grotesk Display', var(--font-body);
+  --font-wordmark-number: 'Quilon', var(--font-body);
+  --tracking-wordmark: -.06em;
+  --tracking-wordmark-number: -.04em;
+
+  --type-session-title: clamp(1.75rem, 6vw, 4.8rem);
+  --type-track-title: clamp(1.25rem, 1.9vw, 1.65rem);
+  --page-grain-size: 112px;
+  --editorial-mark-height: 8rem;
+  --film-grain: url('../assets/textures/film-grain.png');
+  --bento-photo-height: clamp(15rem, 43vw, 31rem);
+  --bento-oil-height: 10rem;
+  --bento-logo-width: clamp(15rem, 34vw, 28rem);
 
   /* Escala tipográfica — passo ~1.2, base 13px (UI densa de documentação) */
   --fs-3xs: 0.563rem;  /*  9px — micro-labels, legendas de swatch */
@@ -134,6 +163,10 @@
   --radius-full: 999px;
 
   --border-width: 1px;
+  --border-print: 2px;
+  --shadow-press: 2px 3px;
+  --offset-press: 1px 2px;
+  --angle-play: -3deg;
 
   /* Motion — curtas e sem exagero; a página é densa */
   --dur-fast: 120ms;
@@ -143,7 +176,6 @@
   --ease: cubic-bezier(0.2, 0, 0.2, 1);
 
   /* Layout */
-  --layout-nav-h: 48px;
   --layout-max-w: 1200px;
   --layout-mix-w: 720px;
   --layout-px: 40px;      /* sobrescrito nos breakpoints em layout.css */
@@ -169,9 +201,6 @@
 :root {
   --brand-ground: var(--brand-black);
   --brand-ink: var(--brand-cream);
-  /* Ponto minúsculo e discreto: textura que se sente mais do que se vê. */
-  --texture-dot-size: 2px;
-  --texture-dot: radial-gradient(rgba(17, 23, 26, 0.32) 0.45px, transparent 0.75px);
 }
 
 /* ------------------------------------------------------------

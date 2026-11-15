@@ -7,7 +7,7 @@ build e sem dependência: abrir `index.html` no navegador já funciona.
 
 ```
 OCN9/
-├─ index.html            página única com 4 abas
+├─ index.html            página única com 4 seções
 ├─ mockup-prompts.md     prompts de geração de imagem para mockups de merch
 ├─ css/                  cascata em 5 camadas, nesta ordem
 │  ├─ tokens.css         cor, tipo, espaço, forma, motion, z-index (light + dark)
@@ -17,7 +17,8 @@ OCN9/
 │  └─ utilities.css      exceções de uma propriedade — sempre por último
 ├─ js/
 │  ├─ i18n.js            dicionário PT/EN, único lugar com texto de interface
-│  ├─ app.js             tema, abas, idioma, moodboard, modal, player
+│  ├─ app.js             tema, idioma, moodboard, modal, player
+│  ├─ bento.js           noise da foto e animação do óleo
 │  ├─ mixer.js           transporte e controles das trilhas
 │  └─ mix-tracks.js      arquivos e nomes dos canais por faixa
 ├─ assets/
@@ -25,7 +26,7 @@ OCN9/
 │  ├─ covers/            capas dos EPs — vazia; a página cai no placeholder
 │  ├─ docs/              letras e BPM de origem (.rtf)
 │  ├─ help/              imagens dos modais de contexto
-│  ├─ images/            renders de merch (seção Merch da aba de identidade visual)
+│  ├─ images/            renders de merch (seção Merch de identidade visual)
 │  ├─ logo/              logotipo e símbolo, em SVG
 │  └─ moodboard/         mood01…mood10.jpg
 └─ backups/              versões anteriores do site
@@ -46,20 +47,8 @@ OCN9/
 
 ## Navegação
 
-Acima de **900px** as quatro seções ficam lado a lado na barra. Abaixo disso a
-barra guarda só marca, seção atual, tema e hambúrguer, e o menu abre como
-gaveta com os itens empilhados.
-
-O número 900 é medido, não arbitrário: a barra horizontal completa ocupa 844px
-em português (o idioma de rótulos mais longos), e os 56px restantes são folga.
-**Se os rótulos das abas mudarem, meça de novo** — o cálculo está comentado em
-`layout.css`.
-
-Os botões são os mesmos nos dois modos, sem duplicação de markup: só a
-apresentação muda. Atenção a um detalhe da cascata — o hambúrguer carrega a
-classe `.nav__tab`, cujo `display:flex` vive em `components.css`; por isso as
-regras que escondem e mostram esse botão precisam estar nesse arquivo, e não em
-`layout.css`, que carrega antes e perderia o desempate.
+As quatro seções ficam na mesma página. O topo tem apenas o seletor de
+idioma e o botão de tema, em um grupo de preferências separado do conteúdo.
 
 ## Tema
 
@@ -69,7 +58,7 @@ primeira pintura, sem piscar e sem depender de JS. O sistema operacional não
 manda aqui: só uma escolha anterior do visitante, gravada em `localStorage`
 (`ocn9:theme`), sobrescreve o padrão.
 
-As vitrines da aba de identidade visual (`.stage-white`, `.stage-black`,
+As vitrines de identidade visual (`.stage-white`, `.stage-black`,
 `.stage-blue`, `.stage-red`) **não** seguem o tema: elas mostram a peça como
 ela é aplicada, então têm fundo travado nos quatro valores da marca.
 
@@ -102,7 +91,7 @@ depois que o dicionário passa.
   de uma recolorível.
 - Logotipo e símbolo **não aparecem juntos no mesmo campo visual**. A regra
   vale por face: camiseta com logotipo na frente e símbolo nas costas está
-  correta, porque nunca se vê os dois de uma vez. A aba de identidade visual
+  correta, porque nunca se vê os dois de uma vez. A seção de identidade visual
   documenta isso.
 
 ## Player
@@ -113,9 +102,9 @@ elemento. Também deixou de baixar os MP3 no load — nada de áudio sai do
 servidor antes de alguém apertar tocar.
 
 A barra é **fixa no rodapé e só aparece quando algo toca**. Não é sidebar de
-propósito: a página tem quatro abas e só uma tem áudio, então uma coluna fixa
+propósito: a página tem quatro seções e só uma tem áudio, então uma coluna fixa
 cobraria largura nas outras três o tempo todo. A barra não cobra nada enquanto
-está fechada, sobrevive à rolagem e acompanha a troca de aba — dá para ouvir
+está fechada, acompanha a rolagem — dá para ouvir
 lendo o resto. Enquanto está aberta, `body.has-player` reserva a altura dela
 no fim da página, senão a barra tapa o rodapé.
 

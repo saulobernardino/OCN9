@@ -1,7 +1,7 @@
 /* ============================================================
    OCN9 — app.js
    Comportamento da página. Sem dependências.
-   Blocos: tema · abas · idioma · moodboard · modal · player.
+   Blocos: tema · idioma · moodboard · modal · player.
    Cada bloco é isolado e sai sem erro se o markup dele não
    existir na página — assim o arquivo serve para as próximas
    páginas do projeto sem edição.
@@ -73,111 +73,6 @@
   }
 
   /* ==========================================================
-     MENU (hambúrguer)
-     Abaixo de 900px o mesmo <ul> das abas vira gaveta. O CSS faz
-     a troca de apresentação; aqui só cuidamos de abrir, fechar e
-     anunciar o estado.
-     ========================================================== */
-  var nav = document.getElementById('nav');
-  var burger = document.getElementById('navBurger');
-  var currentLabel = document.getElementById('navCurrent');
-
-  function setMenu(open) {
-    if (!nav || !burger) return;
-    nav.classList.toggle('is-open', open);
-    burger.setAttribute('aria-expanded', String(open));
-    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-    document.querySelectorAll('[data-menu-icon]').forEach(function (icon) {
-      icon.toggleAttribute('hidden', icon.getAttribute('data-menu-icon') !== (open ? 'open' : 'closed'));
-    });
-  }
-
-  function menuIsOpen() {
-    return !!nav && nav.classList.contains('is-open');
-  }
-
-  /* Mostra na barra a seção em que se está, já que os rótulos
-     ficam escondidos enquanto a gaveta está fechada. */
-  function syncCurrentLabel() {
-    if (!currentLabel) return;
-    var active = document.querySelector('[role="tab"][aria-selected="true"]');
-    currentLabel.textContent = active ? active.textContent.trim() : '';
-  }
-
-  if (burger) {
-    burger.addEventListener('click', function () {
-      var opening = !menuIsOpen();
-      setMenu(opening);
-      /* A gaveta vem antes das ações no DOM, então o Tab a partir do
-         hambúrguer sairia para a página. Ao abrir, joga o foco na
-         aba ativa para o teclado continuar dentro do menu. */
-      if (opening) {
-        var active = document.querySelector('[role="tab"][aria-selected="true"]');
-        if (active) active.focus();
-      }
-    });
-
-    /* Toque fora da gaveta fecha. */
-    document.addEventListener('click', function (e) {
-      if (menuIsOpen() && !nav.contains(e.target)) setMenu(false);
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && menuIsOpen()) {
-        setMenu(false);
-        burger.focus();
-      }
-    });
-
-    /* Passando para o layout largo a gaveta não faz mais sentido:
-       o menu volta para a barra e o estado precisa zerar junto. */
-    window.matchMedia('(max-width: 900px)').addEventListener('change', function (e) {
-      if (!e.matches) setMenu(false);
-    });
-  }
-
-  /* ==========================================================
-     ABAS
-     Padrão ARIA de tablist: setas navegam, Home/End vão às
-     pontas, a aba ativa é a única no fluxo de tabulação.
-     ========================================================== */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-
-  function selectTab(tab, focus) {
-    tabs.forEach(function (t) {
-      var selected = t === tab;
-      t.setAttribute('aria-selected', String(selected));
-      t.tabIndex = selected ? 0 : -1;
-      var panel = document.getElementById(t.getAttribute('aria-controls'));
-      if (panel) panel.classList.toggle('is-active', selected);
-    });
-    syncCurrentLabel();
-    /* Escolher um destino fecha a gaveta — menos quando a troca
-       veio da navegação por seta, que continua dentro do menu. */
-    if (!focus) setMenu(false);
-    if (focus) tab.focus();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  tabs.forEach(function (tab, index) {
-    tab.addEventListener('click', function () {
-      selectTab(tab, false);
-    });
-
-    tab.addEventListener('keydown', function (e) {
-      var next = null;
-      if (e.key === 'ArrowRight') next = tabs[(index + 1) % tabs.length];
-      else if (e.key === 'ArrowLeft') next = tabs[(index - 1 + tabs.length) % tabs.length];
-      else if (e.key === 'Home') next = tabs[0];
-      else if (e.key === 'End') next = tabs[tabs.length - 1];
-      if (next) {
-        e.preventDefault();
-        selectTab(next, true);
-      }
-    });
-  });
-
-  /* ==========================================================
      IDIOMA
      ========================================================== */
   var DICT = window.OCN9_I18N || {};
@@ -208,9 +103,6 @@
     document.querySelectorAll('[data-lang]').forEach(function (btn) {
       btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
     });
-    /* O rótulo da barra é uma cópia do texto da aba ativa: precisa
-       ser refeito depois que o dicionário reescreve as abas. */
-    syncCurrentLabel();
     if (syncPlayer) syncPlayer();
     if (persist) writeStore(STORAGE_LANG, lang);
   }
