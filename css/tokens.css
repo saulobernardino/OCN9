@@ -12,6 +12,8 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+  /* O espécime desenha apenas o acento de U+00FA e U+00FC. */
+  unicode-range: U+0000-00F9, U+00FB, U+00FD-10FFFF;
 }
 
 @font-face {
