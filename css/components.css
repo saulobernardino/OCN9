@@ -2006,12 +2006,21 @@
   display: grid;
   min-height: var(--bento-oil-height);
   overflow: hidden;
-  background: var(--brand-blue);
+  background: var(--brand-red);
   color: var(--brand-ground);
 }
 
 .bento__oil svg { width: 100%; height: 100%; position: absolute; }
 .oil__ink { fill: currentColor; }
+
+.bento__oil::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--film-grain) left top / var(--page-grain-size) repeat;
+  opacity: .6;
+  pointer-events: none;
+}
 
 .bento__intro {
   grid-area: intro;
