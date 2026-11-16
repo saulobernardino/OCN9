@@ -563,8 +563,15 @@
 .track__downloads a {
   display: inline-flex;
   align-items: center;
+  gap: var(--sp-1);
   min-height: var(--sp-7);
   color: var(--text-tertiary);
+}
+
+.track__downloads svg {
+  width: var(--sp-3);
+  height: var(--sp-3);
+  flex-shrink: 0;
 }
 
 .track__downloads a:hover { color: var(--accent-text); }
