@@ -7,9 +7,9 @@
    ============================================================ */
 
 @font-face {
-  font-family: 'Dx Lactos Vol. 02';
-  src: url('../assets/fonts/dx-lactos-medium.woff2') format('woff2');
-  font-weight: 500;
+  font-family: 'Dx Ruiga';
+  src: url('../assets/fonts/dx-ruiga-semibold.woff2') format('woff2');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
@@ -95,7 +95,7 @@
    ------------------------------------------------------------ */
 :root {
   /* Famílias */
-  --font-body: 'Dx Lactos Vol. 02', system-ui, sans-serif;
+  --font-body: 'Dx Ruiga', system-ui, sans-serif;
   --font-display: var(--font-body);
   --font-wordmark: 'DT Getai Grotesk Display', var(--font-body);
   --font-wordmark-number: 'Quilon', var(--font-body);

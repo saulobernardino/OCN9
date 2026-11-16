@@ -172,7 +172,7 @@ window.OCN9_I18N = {
       'Sobre fundo escuro, o azul e o vermelho da marca não alcançam o contraste mínimo de leitura (WCAG AA). No tema escuro a interface usa os degraus 300 dessas escalas para texto e ícone — a cor de marca continua reservada para superfície e peça.',
 
     slTipo: 'Tipografia',
-    tipoUiWeights: 'Bold nos títulos · Medium nos textos',
+    tipoUiWeights: 'SemiBold · títulos e textos',
 
     slMood: 'Moodboard visual',
     moodDesc:
@@ -339,7 +339,7 @@ window.OCN9_I18N = {
       'On a dark ground, the brand blue and red fall short of the minimum reading contrast (WCAG AA). In dark theme the interface uses the 300 step of those scales for type and icons — the brand colour stays reserved for surfaces and printed pieces.',
 
     slTipo: 'Typography',
-    tipoUiWeights: 'Bold for headings · Medium for text',
+    tipoUiWeights: 'SemiBold · headings and text',
 
     slMood: 'Visual moodboard',
     moodDesc:
