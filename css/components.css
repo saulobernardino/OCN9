@@ -2018,7 +2018,7 @@
   position: absolute;
   inset: 0;
   background: var(--film-grain) left top / var(--page-grain-size) repeat;
-  opacity: .6;
+  opacity: .28;
   pointer-events: none;
 }
 
